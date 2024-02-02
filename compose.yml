@@ -1,0 +1,16 @@
+version: "3.1"
+
+services:
+  talkway-app:
+    build: .
+    x-develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+    container_name: talkway-app
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
