@@ -22,4 +22,4 @@ RUN curl -sf https://gobinaries.com/tj/node-prune | sh && \
 
 EXPOSE 3000
 
-CMD [ "bun", "dev" ]
+CMD [ "npm", "run", "dev" ]
