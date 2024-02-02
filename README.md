@@ -7,16 +7,22 @@ Talkway is not just another messaging app; it's a vibrant community where ideas 
 
 ## Getting Started
 
-First, run the development server:
+First, because we use [Bun](https://bun.sh/) as Package Manager we need to install it first:
+
+```bash
+curl -fsSL https://bun.sh/install | bash -s "bun-v1.0.0"
+```
+
+Second, install deps:
+
+```bash
+bun install
+```
+
+And for the last , you can run the server with this command:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
