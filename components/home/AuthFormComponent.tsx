@@ -37,7 +37,7 @@ const AuthFormComponent = () => {
           })
 
       if (error) {
-        toast.error('An error occurred with auth: ' + error.message)
+        toast.error('An error occurred with auth,' + error.message)
       } else if (!user) {
         toast.success('Signup successful, confirmation mail should be sent soon!')
       }
@@ -118,7 +118,7 @@ const AuthFormComponent = () => {
             disabled={isLoading}
             className='w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-emerald-800 rounded-lg hover:bg-emerald-950 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
           >
-            {isLoggingIn ? 'Login' : 'Register'}
+            {isLoading ? 'Loading...' : isLoggingIn ? 'Login' : 'Register'}
           </button>
         </div>
       </form>
