@@ -14,14 +14,14 @@ const ChannelHeaderComponent = () => {
     <header className='bg-emerald-800 sticky inset-x-0 top-0 z-50'>
       <nav className='container flex items-center justify-between mx-auto' aria-label='Global'>
         <div className='flex lg:flex-1'>
-          <Link href='/channels' className='m-1.5 p-1.5 flex'>
+          <Link href='/' className='m-1.5 p-1.5 flex'>
             <span className='sr-only'>Talkway</span>
             <Image
               className='h-auto w-auto pr-2'
-              src='/assets/images/talkway-logo-icon-light.png'
+              src='/assets/images/talkway-logo-icon-dark.png'
               alt='Talkway Logo'
-              width='10'
-              height='10'
+              width='30'
+              height='30'
             />
           </Link>
         </div>
@@ -52,7 +52,7 @@ const ChannelHeaderComponent = () => {
         <div className='fixed inset-0 z-50' />
         <Dialog.Panel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
           <div className='container flex items-center justify-between px-6 py-6 mx-auto'>
-            <Link href='/channels' className='m-1.5 p-1.5 flex'>
+            <Link href='/' className='m-1.5 p-1.5 flex'>
               <span className='sr-only'>Talkway</span>
               <Image
                 className='h-auto w-auto pr-2'

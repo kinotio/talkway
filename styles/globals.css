@@ -10,3 +10,13 @@ main {
   display: flex;
   flex-direction: column;
 }
+
+.Toastify__toast-container {
+  top: 0 !important;
+  width: 100vw !important;
+  text-align: center !important;
+}
+
+.Toastify__close-button {
+  margin-top: 14px !important;
+}
