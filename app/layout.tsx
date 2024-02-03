@@ -10,9 +10,6 @@ import { ToastContainer } from 'react-toastify'
 
 const inter = Montserrat({ subsets: ['latin'], weight: '500' })
 
-import DefaultLayout from '@/layouts/DefaultLayout'
-import ChannelLayout from '@/layouts/ChannelLayout'
-
 config.autoAddCss = false
 
 export const metadata: Metadata = {
@@ -31,7 +28,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           theme='colored'
           autoClose={5000}
         />
-        <DefaultLayout>{children}</DefaultLayout>
+        {children}
       </body>
     </html>
   )

@@ -18,10 +18,10 @@ const ChannelHeaderComponent = () => {
             <span className='sr-only'>Talkway</span>
             <Image
               className='h-auto w-auto pr-2'
-              src='/assets/images/talkway-logo-icon-light.png'
+              src='/assets/images/talkway-logo-icon-dark.png'
               alt='Talkway Logo'
-              width='10'
-              height='10'
+              width='30'
+              height='30'
             />
           </Link>
         </div>
