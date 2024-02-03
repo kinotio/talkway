@@ -43,9 +43,9 @@ const HeaderComponent = () => {
           <div className='flex flex-col space-y-4 lg:mt-0 lg:flex-row lg:-px-8 lg:space-y-0 lg:px-2'>
             <Link
               href='/join-us'
-              className='text-sm font-semibold leading-6 text-white bg-violet-900 py-2 px-4 rounded-full flex items-center lg:mx-1'
+              className='text-sm font-semibold leading-6 text-violet-900 py-2 px-4 rounded-full flex items-center lg:mx-1'
             >
-              Get started
+              Log in
               <FontAwesomeIcon className='ml-2' icon={faChevronRight} style={{ fontSize: 16 }} />
             </Link>
           </div>
@@ -79,9 +79,9 @@ const HeaderComponent = () => {
               <div className='py-6'>
                 <Link
                   href='/join-us'
-                  className='text-sm font-semibold leading-6 text-white bg-violet-900 py-2 px-4 rounded-full flex items-center lg:mx-1'
+                  className='text-sm font-semibold leading-6 text-violet-900 py-2 px-4 rounded-full flex items-center lg:mx-1'
                 >
-                  Get started
+                  Log in
                   <FontAwesomeIcon
                     className='ml-2'
                     icon={faChevronRight}
