@@ -1,12 +1,13 @@
 import '@styles/globals.css'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+import { config } from '@fortawesome/fontawesome-svg-core'
 
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
 
-import HeaderComponent from '@components/common/HeaderComponent'
-import FooterComponent from '@components/common/FooterComponent'
+import DefaultLayout from '@/layouts/DefaultLayout'
 
-const inter = Montserrat({ subsets: ['latin'], weight: '500' })
+config.autoAddCss = false
 
 export const metadata: Metadata = {
   title: 'Talkway',
@@ -14,15 +15,7 @@ export const metadata: Metadata = {
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <html lang='en'>
-      <body className={inter.className}>
-        <HeaderComponent />
-        {children}
-        <FooterComponent />
-      </body>
-    </html>
-  )
+  return <DefaultLayout>{children}</DefaultLayout>
 }
 
 export default RootLayout

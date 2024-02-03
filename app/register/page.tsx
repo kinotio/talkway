@@ -1,9 +1,7 @@
-import HeroComponent from '@/components/home/HeroComponent'
-
 const Page = () => {
   return (
     <main className='container mx-auto'>
-      <HeroComponent />
+      <div>Register</div>
     </main>
   )
 }
