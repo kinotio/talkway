@@ -1,9 +1,9 @@
-import Image from 'next/image'
+import HeroComponent from '@/components/modules/home/HeroComponent'
 
 const Page = () => {
   return (
     <main className='container mx-auto'>
-      <div>hello, world</div>
+      <HeroComponent />
     </main>
   )
 }
