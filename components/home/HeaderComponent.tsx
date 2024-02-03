@@ -42,7 +42,7 @@ const HeaderComponent = () => {
         <div className='hidden lg:flex lg:justify-end items-center'>
           <div className='flex flex-col space-y-4 lg:mt-0 lg:flex-row lg:-px-8 lg:space-y-0 lg:px-2'>
             <Link
-              href='/join-us'
+              href='/login'
               className='text-sm font-semibold leading-6 text-violet-900 py-2 px-4 rounded-full flex items-center lg:mx-1'
             >
               Log in
@@ -78,7 +78,7 @@ const HeaderComponent = () => {
             <div className='my-6 divide-y divide-gray-500/10'>
               <div className='py-6'>
                 <Link
-                  href='/join-us'
+                  href='/login'
                   className='text-sm font-semibold leading-6 text-violet-900 py-2 px-4 rounded-full flex items-center lg:mx-1'
                 >
                   Log in

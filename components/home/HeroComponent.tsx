@@ -5,7 +5,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 const HeroComponent = () => {
   return (
     <section className='relative isolate px-6 lg:px-8'>
-      <div className='mx-auto max-w-1xl py-32 sm:py-48 lg:py-56'>
+      <div className='mx-auto max-w-1xl py-44'>
         <div className='text-center'>
           <h1 className='text-3xl text-gray-900 font-semibold sm:text-6xl'>
             <span className='text-violet-400'>Seamless</span> conversations and{' '}
@@ -17,7 +17,7 @@ const HeroComponent = () => {
           </p>
           <div className='mt-10 flex items-center justify-center gap-x-6'>
             <Link
-              href='/join-us'
+              href='/register'
               className='text-sm font-semibold leading-6 text-white bg-violet-900 py-2 px-4 rounded-full flex items-center lg:mx-1'
             >
               Get started
