@@ -13,10 +13,10 @@ const FooterComponent = () => {
           <Link href='/'>
             <Image
               className='h-auto w-auto pr-2'
-              src='/assets/images/talkway-logo.png'
+              src='/assets/images/talkway-logo-dark.png'
               alt='Talkway Logo'
-              width='100'
-              height='100'
+              width='75'
+              height='75'
             />
           </Link>
 

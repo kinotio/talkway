@@ -6,6 +6,7 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import type { Metadata } from 'next'
 
 import DefaultLayout from '@/layouts/DefaultLayout'
+import ChannelLayout from '@/layouts/ChannelLayout'
 
 config.autoAddCss = false
 
