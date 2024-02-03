@@ -1,7 +1,6 @@
 import { Montserrat } from 'next/font/google'
 
-import HeaderComponent from '@/components/home/HeaderComponent'
-import FooterComponent from '@/components/home/FooterComponent'
+import ChannelHeaderComponent from '@/components/channels/ChannelHeaderComponent'
 
 const inter = Montserrat({ subsets: ['latin'], weight: '500' })
 
@@ -9,9 +8,8 @@ const ChannelLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <HeaderComponent />
+        <ChannelHeaderComponent />
         {children}
-        <FooterComponent />
       </body>
     </html>
   )

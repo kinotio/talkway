@@ -5,28 +5,25 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Dialog } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faXmark, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faXmark, faUser } from '@fortawesome/free-solid-svg-icons'
 
-const HeaderComponent = () => {
+const ChannelHeaderComponent = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className='bg-white sticky inset-x-0 top-0 z-50'>
-      <nav
-        className='container flex items-center justify-between px-6 py-6 mx-auto'
-        aria-label='Global'
-      >
+    <header className='bg-emerald-800 sticky inset-x-0 top-0 z-50'>
+      <nav className='container flex items-center justify-between mx-auto' aria-label='Global'>
         <div className='flex lg:flex-1'>
-          <a href='/' className='m-1.5 p-1.5 flex'>
+          <Link href='/channels' className='m-1.5 p-1.5 flex'>
             <span className='sr-only'>Talkway</span>
             <Image
               className='h-auto w-auto pr-2'
-              src='/assets/images/talkway-logo-dark.png'
+              src='/assets/images/talkway-logo-icon-light.png'
               alt='Talkway Logo'
-              width='75'
-              height='75'
+              width='10'
+              height='10'
             />
-          </a>
+          </Link>
         </div>
         <div className='flex lg:hidden'>
           <button
@@ -42,11 +39,11 @@ const HeaderComponent = () => {
         <div className='hidden lg:flex lg:justify-end items-center'>
           <div className='flex flex-col space-y-4 lg:mt-0 lg:flex-row lg:-px-8 lg:space-y-0 lg:px-2'>
             <Link
-              href='/login'
-              className='text-sm font-semibold leading-6 text-emerald-900 py-2 px-4 rounded-full flex items-center lg:mx-1'
+              href='#'
+              className='text-sm font-semibold leading-6 text-white py-2 px-4 rounded-full flex items-center lg:mx-1'
             >
-              Log in
-              <FontAwesomeIcon className='ml-2' icon={faChevronRight} style={{ fontSize: 16 }} />
+              Profile
+              <FontAwesomeIcon className='ml-2' icon={faUser} style={{ fontSize: 16 }} />
             </Link>
           </div>
         </div>
@@ -55,16 +52,16 @@ const HeaderComponent = () => {
         <div className='fixed inset-0 z-50' />
         <Dialog.Panel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
           <div className='container flex items-center justify-between px-6 py-6 mx-auto'>
-            <a href='/' className='m-1.5 p-1.5 flex'>
+            <Link href='/channels' className='m-1.5 p-1.5 flex'>
               <span className='sr-only'>Talkway</span>
               <Image
                 className='h-auto w-auto pr-2'
-                src='/assets/images/talkway-logo-dark.png'
+                src='/assets/images/talkway-logo-icon-light.png'
                 alt='Talkway Logo'
-                width='75'
-                height='75'
+                width='10'
+                height='10'
               />
-            </a>
+            </Link>
             <button
               type='button'
               className='rounded-md text-gray-700'
@@ -78,15 +75,11 @@ const HeaderComponent = () => {
             <div className='my-6 divide-y divide-gray-500/10'>
               <div className='py-6'>
                 <Link
-                  href='/login'
-                  className='text-sm font-semibold leading-6 text-emerald-900 py-2 px-4 rounded-full flex items-center lg:mx-1'
+                  href='#'
+                  className='text-sm font-semibold leading-6 text-white py-2 px-4 rounded-full flex items-center lg:mx-1'
                 >
-                  Log in
-                  <FontAwesomeIcon
-                    className='ml-2'
-                    icon={faChevronRight}
-                    style={{ fontSize: 16 }}
-                  />
+                  Profile
+                  <FontAwesomeIcon className='ml-2' icon={faUser} style={{ fontSize: 16 }} />
                 </Link>
               </div>
             </div>
@@ -97,4 +90,4 @@ const HeaderComponent = () => {
   )
 }
 
-export default HeaderComponent
+export default ChannelHeaderComponent

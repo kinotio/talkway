@@ -7,7 +7,7 @@ const Page = () => {
       <div className='flex justify-center mx-auto'>
         <Image
           className='h-auto w-auto pr-2'
-          src='/assets/images/talkway-logo.png'
+          src='/assets/images/talkway-logo-dark.png'
           alt='Talkway Logo'
           width='100'
           height='100'
@@ -41,7 +41,7 @@ const Page = () => {
         </div>
 
         <div className='mt-6'>
-          <button className='w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-violet-800 rounded-lg hover:bg-violet-950 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'>
+          <button className='w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-emerald-800 rounded-lg hover:bg-emerald-950 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'>
             Login
           </button>
         </div>
@@ -50,7 +50,7 @@ const Page = () => {
       <p className='mt-8 text-xs font-light text-center text-gray-400'>
         {' '}
         Dont have an account?{' '}
-        <Link href='/register' className='font-medium text-violet-500 hover:underline'>
+        <Link href='/register' className='font-medium text-emerald-500 hover:underline'>
           Register
         </Link>
       </p>
