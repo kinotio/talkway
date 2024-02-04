@@ -24,7 +24,8 @@ const AuthComponent = () => {
     login({ email, password })
       .then(({ error, data }) => {
         if (error) return toast.error(error.message)
-        setCookie('user', data)
+        setCookie('__user', data.user.id)
+        setCookie('__token', data.session.access_token)
         router.push('/channels/1')
       })
       .finally(() => {
