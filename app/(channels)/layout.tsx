@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 import SibebarComponent from '@/components/channels/SibebarComponent'
+import FriendsComponent from '@/components/channels/FriendsComponent'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -17,6 +18,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className='channel__content'>
         <SibebarComponent />
         {children}
+        <FriendsComponent />
       </div>
     </div>
   )

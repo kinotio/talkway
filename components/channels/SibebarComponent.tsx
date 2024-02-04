@@ -154,7 +154,7 @@ const SibebarComponent = () => {
 
   return (
     <div className='channel__sidebar'>
-      <div className='channel_create border-r'>
+      <div className='channel_create border-r border-b'>
         <div className='channel_create_input'>
           <input
             onChange={(e) => setChannelName(e.target.value)}
@@ -188,7 +188,7 @@ const SibebarComponent = () => {
                 as={`/channels/${channel.id}`}
                 className={`${channel.id === Number(id) ? 'bg-emerald-600 text-white' : 'text-gray-600'} channel_list_item_channel border-b`}
               >
-                <div className='channel__item  py-1 text-sm flex items-center '>
+                <div className='channel__item py-1 text-sm flex items-center'>
                   <FontAwesomeIcon className='mr-2' icon={faHashtag} style={{ fontSize: 14 }} />
                   {channel?.slug}
                 </div>

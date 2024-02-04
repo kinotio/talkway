@@ -32,7 +32,7 @@ main {
 }
 
 .channel__content {
-  width: 75vw;
+  width: 95vw;
   height: 80vh;
   border-radius: 10px;
   display: flex;
@@ -101,7 +101,6 @@ main {
 .channel__message_header {
   width: 100%;
   height: 10vh;
-  border-top-right-radius: 10px;
   display: flex;
   align-items: center;
 }
@@ -156,6 +155,33 @@ main {
 .channel_list_item_channel {
   display: flex;
   justify-content: space-between;
+}
+
+.channel__direct_message {
+  width: 20vw;
+  height: 100%;
+}
+
+.channel__direct_message_header {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.channel__direct_message_friends {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
+}
+
+.channel__direct_message_friend {
+  display: flex;
+  align-items: center;
 }
 
 .lds-facebook {
