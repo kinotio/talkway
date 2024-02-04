@@ -58,8 +58,6 @@ const Page = () => {
           toast.error('An error occurred while getting messages')
           return
         }
-        console.log(data)
-
         setMessages(data)
       })
       .finally(() => setIsMessagesLoading(false))
