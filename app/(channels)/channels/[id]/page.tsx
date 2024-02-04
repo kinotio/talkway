@@ -22,8 +22,6 @@ const Page = () => {
 
   const messagesEndRef = useRef<HTMLElement | null>(null) as any
 
-  const [user, setUser] = useState<{ [key: string]: any }>({})
-
   const [messages, setMessages] = useState<Array<{ [key: string]: any }>>([])
   const [channel, setChannel] = useState<{ id: number; slug: string }>({ id: 0, slug: '' })
   const [message, setMessage] = useState<string>('')
@@ -78,27 +76,12 @@ const Page = () => {
             toast.error('An error occurred while getting messages')
             return
           }
-          handleGetMessages()
         })
         .finally(() => {
           setMessage('')
           setIsMessageCreating(false)
         })
     }
-  }
-
-  const handleGetUser = () => {
-    setIsUserLoading(true)
-
-    getUser({ userId })
-      .then(({ error, data }) => {
-        if (error) {
-          toast.error('An error occurred while getting user')
-          return
-        }
-        setUser(data[0])
-      })
-      .finally(() => setIsUserLoading(false))
   }
 
   useEffect(() => {
@@ -111,7 +94,6 @@ const Page = () => {
   }, [messages])
 
   useEffect(() => {
-    handleGetUser()
     handleGetChannel()
     handleGetMessages()
   }, [id])
@@ -134,11 +116,17 @@ const Page = () => {
 
   useEffect(() => {
     if (newMessage && newMessage?.new?.channel_id === channel.id) {
-      const newMessageAltered = {
-        ...newMessage.new,
-        author: user
-      }
-      setMessages(messages.concat(newMessageAltered))
+      getUser({ userId: newMessage.new.user_id }).then(({ error, data }) => {
+        if (error) {
+          toast.error('An error occurred while getting user')
+          return
+        }
+        const newMessageAltered = {
+          ...newMessage.new,
+          author: data[0]
+        }
+        setMessages(messages.concat(newMessageAltered))
+      })
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

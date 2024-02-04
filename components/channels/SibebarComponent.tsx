@@ -61,7 +61,6 @@ const SibebarComponent = () => {
           toast.error('An error occurred while getting channels')
           return
         }
-        handleGetChannels()
         handleGetUser()
       })
       .finally(() => {
