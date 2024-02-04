@@ -105,6 +105,7 @@ const Page = () => {
   useEffect(() => {
     handleGetChannel()
     handleGetMessages()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   useEffect(() => {
@@ -137,7 +138,6 @@ const Page = () => {
         setMessages(messages.concat(newMessageAltered))
       })
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newMessage])
 
