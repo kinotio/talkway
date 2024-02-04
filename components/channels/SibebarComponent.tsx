@@ -104,7 +104,11 @@ const SibebarComponent = () => {
         ) : (
           <>
             {channels.map((channel) => (
-              <Link key={channel.id} href='#' className='channel_list_item_channel border-b'>
+              <Link
+                key={channel.id}
+                href={`/channels/${channel.id}`}
+                className='channel_list_item_channel border-b'
+              >
                 <div className='channel__item text-gray-500 py-1 text-sm flex items-center '>
                   <FontAwesomeIcon className='mr-2' icon={faHashtag} style={{ fontSize: 14 }} />
                   {channel.slug}

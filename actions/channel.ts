@@ -4,6 +4,10 @@ export const getChannels = async () => {
   return await supabase.from('channels').select('*')
 }
 
+export const getChannel = async ({ channelId }: { channelId: number }) => {
+  return await supabase.from('channels').select(`*`).eq('id', channelId)
+}
+
 export const createChannel = async ({
   channelName,
   userId
