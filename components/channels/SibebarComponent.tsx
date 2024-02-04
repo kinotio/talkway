@@ -10,19 +10,41 @@ import {
   faRightFromBracket,
   faTrash
 } from '@fortawesome/free-solid-svg-icons'
-import { deleteCookie } from 'cookies-next'
+import { getCookie, deleteCookie } from 'cookies-next'
 import { toast } from 'react-toastify'
 
 import LoaderComponent from '@/components/LoaderComponent'
 
 import { logout } from '@/actions/user'
-import { getChannels } from '@/actions/channel'
+import { getChannels, createChannel } from '@/actions/channel'
 
 const SibebarComponent = () => {
+  const userCookie = getCookie('user')
+  const user = userCookie ? JSON.parse(userCookie) : null
+
   const [channels, setChannels] = useState<Array<{ [key: string]: any }>>([])
+  const [channelName, setChannelName] = useState<string>('')
 
   const [isLogoutLoading, setIsLogoutLoading] = useState<boolean>(false)
   const [isChannelLoading, setIsChannelLoading] = useState<boolean>(false)
+  const [isChannelCreating, setIsChannelCreating] = useState<boolean>(false)
+
+  const handleCreateChannel = () => {
+    setIsChannelCreating(true)
+
+    createChannel({ channelName: channelName.toLowerCase(), userId: user?.user?.id })
+      .then(({ error }) => {
+        if (error) {
+          toast.error('An error occurred while getting channels')
+          return
+        }
+        handleGetChannels()
+      })
+      .finally(() => {
+        setChannelName('')
+        setIsChannelCreating(false)
+      })
+  }
 
   const handleLogout = () => {
     setIsLogoutLoading(true)
@@ -35,7 +57,7 @@ const SibebarComponent = () => {
       .finally(() => setIsLogoutLoading(false))
   }
 
-  useEffect(() => {
+  const handleGetChannels = () => {
     setIsChannelLoading(true)
 
     getChannels()
@@ -47,6 +69,10 @@ const SibebarComponent = () => {
         setChannels(data)
       })
       .finally(() => setIsChannelLoading(false))
+  }
+
+  useEffect(() => {
+    handleGetChannels()
   }, [])
 
   return (
@@ -54,14 +80,18 @@ const SibebarComponent = () => {
       <div className='channel_create'>
         <div className='channel_create_input'>
           <input
+            onChange={(e) => setChannelName(e.target.value)}
             type='text'
             name='createChannel'
             className='channel_create_input_text block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
             placeholder='Create your channel'
           />
-          <button className='uppercase mt-2 channel_create_input_button w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-emerald-600 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'>
+          <button
+            onClick={handleCreateChannel}
+            className='uppercase mt-2 channel_create_input_button w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-emerald-600 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
+          >
             <FontAwesomeIcon className='mr-2' icon={faPlusCircle} style={{ fontSize: 14 }} />
-            Create
+            {isChannelCreating ? 'Creating...' : 'Create'}
           </button>
         </div>
       </div>
