@@ -172,7 +172,9 @@ const Page = () => {
                       <span className='ml-1'>{new Date(message.inserted_at).toString()}</span>
                     </div>
                     <div className='channel__message_item_content'>
-                      <span className='channel__message_item_content_msg text-white'>
+                      <span
+                        className={`${message.user_id === userId ? 'bg-blue-400' : 'bg-emerald-400'} channel__message_item_content_msg text-white`}
+                      >
                         {message.message}
                       </span>
                       {message.user_id === userId ? (
