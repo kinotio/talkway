@@ -64,6 +64,7 @@ main {
 .channel_create_input {
   display: flex;
   flex-direction: column;
+  width: 80%;
 }
 
 .channel_list {
