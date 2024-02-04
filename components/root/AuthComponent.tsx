@@ -75,6 +75,7 @@ const AuthComponent = () => {
           </label>
           <input
             onChange={(e) => setEmail(e.target.value)}
+            value={email}
             type='text'
             name='email'
             className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
@@ -90,6 +91,7 @@ const AuthComponent = () => {
 
           <input
             onChange={(e) => setPassword(e.target.value)}
+            value={password}
             type='password'
             name='password'
             className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
@@ -106,6 +108,7 @@ const AuthComponent = () => {
 
             <input
               onChange={(e) => setPasswordConfirm(e.target.value)}
+              value={passwordConfirm}
               type='password'
               name='confirmPassword'
               className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'

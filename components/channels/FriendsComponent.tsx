@@ -53,7 +53,7 @@ const FriendsComponent = () => {
         ) : (
           <>
             {users.map((user) => (
-              <Link key={user.id} href='#'>
+              <Link key={user.id} href={`/channels/friends/${user.id}`}>
                 <div className='channel__direct_message_friend text-sm flex items-center text-gray-600 py-4 px-4 border-b'>
                   <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 14 }} />
                   {user?.username}

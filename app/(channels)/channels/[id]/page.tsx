@@ -78,7 +78,7 @@ const Page = () => {
       createMessage({ message, channelId: channel.id, userId })
         .then(({ error }) => {
           if (error) {
-            toast.error('An error occurred while getting messages')
+            toast.error('An error occurred while saving message')
             return
           }
         })
