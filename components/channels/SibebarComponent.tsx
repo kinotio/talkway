@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faPlusCircle,
@@ -17,12 +18,13 @@ import { useParams } from 'next/navigation'
 import LoaderComponent from '@/components/LoaderComponent'
 
 import { logout, getUser } from '@/actions/user'
-import { getChannels, createChannel } from '@/actions/channel'
+import { getChannels, createChannel, deleteChannel } from '@/actions/channel'
 
 import { supabase } from '@/lib/supabase'
 
 const SibebarComponent = () => {
   const { id } = useParams()
+  const router = useRouter()
 
   const userId = getCookie('__user') as string
 
@@ -110,6 +112,16 @@ const SibebarComponent = () => {
       .finally(() => setIsUserLoading(false))
   }
 
+  const handleDeleteChannel = ({ channelId }: { channelId: number }) => {
+    deleteChannel({ channelId }).then(({ error }) => {
+      if (error) {
+        toast.error('An error occurred while deleting channel')
+        return
+      }
+      router.push(`/channels/${channelId - 1}`)
+    })
+  }
+
   useEffect(() => {
     handleGetUser()
     handleGetChannels()
@@ -178,11 +190,16 @@ const SibebarComponent = () => {
               >
                 <div className='channel__item  py-1 text-sm flex items-center '>
                   <FontAwesomeIcon className='mr-2' icon={faHashtag} style={{ fontSize: 14 }} />
-                  {channel.slug}
+                  {channel?.slug}
                 </div>
-                <button className='mr-4'>
-                  <FontAwesomeIcon className='mr-2 ' icon={faTrash} style={{ fontSize: 14 }} />
-                </button>
+                {channel.created_by === user.id ? (
+                  <button
+                    onClick={() => handleDeleteChannel({ channelId: channel.id })}
+                    className='text-gray-600 hover:text-white hover:bg-red-600 px-2 py-2 flex justify-center items-center'
+                  >
+                    <FontAwesomeIcon icon={faTrash} style={{ fontSize: 14 }} />
+                  </button>
+                ) : null}
               </Link>
             ))}
           </>

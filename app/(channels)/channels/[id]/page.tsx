@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 import LoaderComponent from '@/components/LoaderComponent'
 
 import { getChannel } from '@/actions/channel'
-import { getMessages, createMessage } from '@/actions/message'
+import { getMessages, createMessage, deleteMessage } from '@/actions/message'
 import { getUser } from '@/actions/user'
 
 import { supabase } from '@/lib/supabase'
@@ -29,7 +29,6 @@ const Page = () => {
   const [isChannelLoading, setIsChannelLoading] = useState<boolean>(false)
   const [isMessagesLoading, setIsMessagesLoading] = useState<boolean>(false)
   const [isMessageCreating, setIsMessageCreating] = useState<boolean>(false)
-  const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
 
   const [newMessage, handleNewMessage] = useState<{ new: any }>({ new: null })
   const [deletedMessage, handleDeletedMessage] = useState<{ old: any }>({
@@ -82,6 +81,10 @@ const Page = () => {
           setIsMessageCreating(false)
         })
     }
+  }
+
+  const handleDeleteMessage = ({ messageId }: { messageId: number }) => {
+    deleteMessage({ messageId })
   }
 
   useEffect(() => {
@@ -143,7 +146,7 @@ const Page = () => {
       <div className='channel__message_header border-b bg-emerald-500'>
         <div className='text-white py-1 flex items-center ml-4 text-2xl'>
           <FontAwesomeIcon className='mr-2' icon={faHashtag} style={{ fontSize: 24 }} />
-          {isChannelLoading ? '...' : <> {channel.slug}</>}
+          {isChannelLoading ? '...' : <> {channel?.slug}</>}
         </div>
       </div>
 
@@ -172,15 +175,16 @@ const Page = () => {
                       <span className='channel__message_item_content_msg text-white'>
                         {message.message}
                       </span>
-                      <div className='channel__message_item_content_btn'>
-                        <button>
-                          <FontAwesomeIcon
-                            className='mr-2 text-gray-600'
-                            icon={faTrash}
-                            style={{ fontSize: 14 }}
-                          />
-                        </button>
-                      </div>
+                      {message.user_id === userId ? (
+                        <div className='channel__message_item_content_btn'>
+                          <button
+                            onClick={() => handleDeleteMessage({ messageId: message.id })}
+                            className='mr-2 text-gray-600 hover:text-red-600'
+                          >
+                            <FontAwesomeIcon icon={faTrash} style={{ fontSize: 14 }} />
+                          </button>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 ))}
