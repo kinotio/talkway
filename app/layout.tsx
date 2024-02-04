@@ -5,10 +5,10 @@ import 'react-toastify/dist/ReactToastify.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import { ToastContainer } from 'react-toastify'
 
-const inter = Montserrat({ subsets: ['latin'], weight: '500' })
+const inter = Poppins({ subsets: ['latin'], weight: ['300', '500'] })
 
 config.autoAddCss = false
 

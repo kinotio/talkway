@@ -3,11 +3,11 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-
-import { supabase } from '@lib/supabase'
 import { toast } from 'react-toastify'
 
-const AuthFormComponent = () => {
+import { supabase } from '@lib/supabase'
+
+const AuthComponent = () => {
   const router = useRouter()
 
   const [email, setEmail] = useState('')
@@ -17,39 +17,33 @@ const AuthFormComponent = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoggingIn, setIsLoggingIn] = useState(true)
 
-  const handleAuth = async () => {
+  const handleLogin = async () => {
+    const { error, data } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (error) return toast.error(error.message)
+
+    router.replace('/channels/1')
+  }
+
+  const handleRegister = async () => {
     if (passwordConfirm && password !== passwordConfirm) {
       toast.error('Sorry, password dont match')
       return
     }
-
-    setIsLoading(true)
-
-    try {
-      const {
-        error,
-        data: { user }
-      } = isLoggingIn
-        ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({
-            email,
-            password
-          })
-
-      if (error) {
-        toast.error('An error occurred with auth,' + error.message)
-      } else if (!user) {
-        toast.success('Signup successful, confirmation mail should be sent soon!')
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${location.origin}/auth/callback`
       }
-    } catch (error: any) {
-      toast.error('An error occurred while signing in', error.error_description || error)
-    } finally {
-      setEmail('')
-      setPassword('')
-      setPasswordConfirm('')
+    })
 
-      setIsLoading(false)
-    }
+    if (error) return toast.error(error.message)
+
+    toast.success('Signup successful, confirmation mail should be sent soon!')
   }
 
   return (
@@ -110,16 +104,29 @@ const AuthFormComponent = () => {
         ) : null}
 
         <div className='mt-6'>
-          <button
-            onClick={(e) => {
-              e.preventDefault()
-              handleAuth()
-            }}
-            disabled={isLoading}
-            className='w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-emerald-800 rounded-lg hover:bg-emerald-950 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
-          >
-            {isLoading ? 'Loading...' : isLoggingIn ? 'Login' : 'Register'}
-          </button>
+          {isLoggingIn ? (
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                handleLogin()
+              }}
+              disabled={isLoading}
+              className='w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-emerald-600 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
+            >
+              {isLoading ? 'Loading...' : 'Login'}
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                handleRegister()
+              }}
+              disabled={isLoading}
+              className='w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-emerald-600 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
+            >
+              {isLoading ? 'Loading...' : 'Register'}
+            </button>
+          )}
         </div>
       </form>
 
@@ -136,4 +143,4 @@ const AuthFormComponent = () => {
   )
 }
 
-export default AuthFormComponent
+export default AuthComponent
