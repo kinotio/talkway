@@ -1,9 +1,7 @@
 # Talkway 🗣️✉️
 
 ![build](https://github.com/kinotio/talkway/workflows/build/badge.svg)
-
-<!-- ![license](https://img.shields.io/github/license/kinotio/talkway?color=success) -->
-
+![license](https://img.shields.io/github/license/kinotio/talkway?color=success)
 [![Made with Supabase](https://supabase.com/badge-made-with-supabase-dark.svg)](https://supabase.com)
 
 Talkway is not just another messaging app; it's a vibrant community where ideas flow, friendships blossom, and collaboration thrives. With intuitive features and a user-friendly interface, Talkway empowers you to engage in conversations that matter, whether you're connecting with friends, colleagues, or like-minded individuals from around the world.
