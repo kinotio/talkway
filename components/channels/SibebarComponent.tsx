@@ -209,7 +209,7 @@ const SibebarComponent = () => {
       <div className='channel_logout'>
         <span className='pb-2 text-sm font-extralight text-white flex items-center'>
           <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 12 }} />
-          {isUserLoading ? '...' : <> {user.username}</>}
+          {isUserLoading ? '...' : <> {user?.username}</>}
         </span>
         <button
           onClick={handleLogout}
