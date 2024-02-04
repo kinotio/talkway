@@ -110,7 +110,7 @@ const Page = () => {
             {Array.isArray(messages) && messages.length === 0 ? (
               <div className='flex justify-center items-end h-full'>
                 <div className='bg-emerald-500 w-44 flex justify-center items-center px-4 py-4 rounded-md text-white'>
-                  No message
+                  No message 😢
                 </div>
               </div>
             ) : (

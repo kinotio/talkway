@@ -33,9 +33,20 @@ const SibebarComponent = () => {
   const [isChannelCreating, setIsChannelCreating] = useState<boolean>(false)
 
   const handleCreateChannel = () => {
+    if (channelName === '') return
+
+    const slugifiedChannelName = channelName
+      .toString()
+      .toLowerCase()
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace(/[^\w-]+/g, '') // Remove all non-word chars
+      .replace(/--+/g, '-') // Replace multiple - with single -
+      .replace(/^-+/, '') // Trim - from start of text
+      .replace(/-+$/, '') // Trim - from end of text
+
     setIsChannelCreating(true)
 
-    createChannel({ channelName: channelName.toLowerCase(), userId: user?.user?.id })
+    createChannel({ channelName: slugifiedChannelName, userId: user?.user?.id })
       .then(({ error }) => {
         if (error) {
           toast.error('An error occurred while getting channels')
