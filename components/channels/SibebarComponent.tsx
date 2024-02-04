@@ -16,14 +16,15 @@ import { useParams } from 'next/navigation'
 
 import LoaderComponent from '@/components/LoaderComponent'
 
-import { logout } from '@/actions/user'
+import { logout, getUser } from '@/actions/user'
 import { getChannels, createChannel } from '@/actions/channel'
 
 const SibebarComponent = () => {
   const { id } = useParams()
 
-  const userCookie = getCookie('user')
-  const user = userCookie ? JSON.parse(userCookie) : null
+  const userId = getCookie('__user') as string
+
+  const [user, setUser] = useState<{ [key: string]: any }>({})
 
   const [channels, setChannels] = useState<Array<{ [key: string]: any }>>([])
   const [channelName, setChannelName] = useState<string>('')
@@ -31,6 +32,7 @@ const SibebarComponent = () => {
   const [isLogoutLoading, setIsLogoutLoading] = useState<boolean>(false)
   const [isChannelLoading, setIsChannelLoading] = useState<boolean>(false)
   const [isChannelCreating, setIsChannelCreating] = useState<boolean>(false)
+  const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
 
   const handleCreateChannel = () => {
     if (channelName === '') return
@@ -46,13 +48,14 @@ const SibebarComponent = () => {
 
     setIsChannelCreating(true)
 
-    createChannel({ channelName: slugifiedChannelName, userId: user?.user?.id })
+    createChannel({ channelName: slugifiedChannelName, userId: user.id })
       .then(({ error }) => {
         if (error) {
           toast.error('An error occurred while getting channels')
           return
         }
         handleGetChannels()
+        handleGetUser()
       })
       .finally(() => {
         setChannelName('')
@@ -65,7 +68,8 @@ const SibebarComponent = () => {
 
     logout()
       .then(() => {
-        deleteCookie('user')
+        deleteCookie('__user')
+        deleteCookie('__token')
         window.location.href = '/'
       })
       .finally(() => setIsLogoutLoading(false))
@@ -85,7 +89,23 @@ const SibebarComponent = () => {
       .finally(() => setIsChannelLoading(false))
   }
 
+  const handleGetUser = () => {
+    setIsUserLoading(true)
+
+    getUser({ userId })
+      .then(({ error, data }) => {
+        if (error) {
+          toast.error('An error occurred while getting user')
+          handleLogout()
+          return
+        }
+        setUser(data[0])
+      })
+      .finally(() => setIsUserLoading(false))
+  }
+
   useEffect(() => {
+    handleGetUser()
     handleGetChannels()
   }, [])
 
@@ -140,7 +160,8 @@ const SibebarComponent = () => {
 
       <div className='channel_logout'>
         <span className='pb-2 text-sm font-extralight text-white flex items-center'>
-          <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 12 }} /> user@email.com
+          <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 12 }} />
+          {isUserLoading ? '...' : <> {user.username}</>}
         </span>
         <button
           onClick={handleLogout}

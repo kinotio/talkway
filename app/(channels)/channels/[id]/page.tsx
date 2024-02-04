@@ -14,8 +14,8 @@ import { getMessages, createMessage } from '@/actions/message'
 
 const Page = () => {
   const { id } = useParams()
-  const userCookie = getCookie('user')
-  const user = userCookie ? JSON.parse(userCookie) : null
+
+  const userId = getCookie('__user') as string
 
   const messagesEndRef = useRef<HTMLElement | null>(null) as any
 
@@ -61,7 +61,7 @@ const Page = () => {
     if (e.keyCode === 13) {
       setIsMessageCreating(true)
 
-      createMessage({ message, channelId: channel.id, userId: user.user.id })
+      createMessage({ message, channelId: channel.id, userId })
         .then(({ error }) => {
           if (error) {
             toast.error('An error occurred while getting messages')
