@@ -22,7 +22,8 @@
       "@components/*": ["./components/*"],
       "@styles/*": ["./styles/*"],
       "@lib/*": ["./lib/*"],
-      "@hooks/*": ["./hooks/*"]
+      "@hooks/*": ["./hooks/*"],
+      "@actions/*": ["./actions/*"]
     },
     "typeRoots": ["types/**/*.d.ts", "node_modules/@types"]
   },

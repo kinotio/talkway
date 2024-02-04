@@ -1,9 +1,5 @@
 const Page = () => {
-  return (
-    <main className='container mx-auto'>
-      <div>You are connected!</div>
-    </main>
-  )
+  return <>{/* <div>Channel</div> */}</>
 }
 
 export default Page
