@@ -213,6 +213,16 @@ main {
   animation-delay: 0;
 }
 
+.Toastify__toast-container {
+  top: 0 !important;
+  width: 100vw !important;
+  text-align: center !important;
+}
+
+.Toastify__close-button {
+  margin-top: 14px !important;
+}
+
 @keyframes lds-facebook {
   0% {
     top: 8px;
