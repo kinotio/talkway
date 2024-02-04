@@ -19,6 +19,8 @@ import LoaderComponent from '@/components/LoaderComponent'
 import { logout, getUser } from '@/actions/user'
 import { getChannels, createChannel } from '@/actions/channel'
 
+import { supabase } from '@/lib/supabase'
+
 const SibebarComponent = () => {
   const { id } = useParams()
 
@@ -33,6 +35,11 @@ const SibebarComponent = () => {
   const [isChannelLoading, setIsChannelLoading] = useState<boolean>(false)
   const [isChannelCreating, setIsChannelCreating] = useState<boolean>(false)
   const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
+
+  const [newChannel, handleNewChannel] = useState<{ new: any }>({ new: null })
+  const [deletedChannel, handleDeletedChannel] = useState<{ old: any }>({
+    old: null
+  })
 
   const handleCreateChannel = () => {
     if (channelName === '') return
@@ -107,7 +114,32 @@ const SibebarComponent = () => {
   useEffect(() => {
     handleGetUser()
     handleGetChannels()
+
+    const channelListener = supabase
+      .channel('public:channels')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'channels' }, (payload) =>
+        handleNewChannel({ new: payload.new })
+      )
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'channels' }, (payload) =>
+        handleDeletedChannel({ old: payload.old })
+      )
+      .subscribe() as any
+
+    return () => {
+      supabase.removeChannel(supabase.channel(channelListener))
+    }
   }, [])
+
+  useEffect(() => {
+    if (newChannel) setChannels(channels.concat(newChannel.new))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newChannel])
+
+  useEffect(() => {
+    if (deletedChannel)
+      setChannels(channels.filter((channel) => channel.id !== deletedChannel.old.id))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deletedChannel])
 
   return (
     <div className='channel__sidebar'>
