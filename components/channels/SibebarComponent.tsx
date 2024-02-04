@@ -139,6 +139,7 @@ const SibebarComponent = () => {
     return () => {
       supabase.removeChannel(supabase.channel(channelListener))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

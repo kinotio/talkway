@@ -6,6 +6,7 @@ import { getCookie } from 'cookies-next'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHashtag, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
+import moment from 'moment'
 
 import LoaderComponent from '@/components/LoaderComponent'
 
@@ -34,6 +35,11 @@ const Page = () => {
   const [deletedMessage, handleDeletedMessage] = useState<{ old: any }>({
     old: null
   })
+
+  const humanifyDate = ({ dateIso }: { dateIso: Date }) => {
+    const humanReadable = moment(dateIso).format('MMMM Do YYYY, h:mm:ss a')
+    return humanReadable
+  }
 
   const handleGetChannel = () => {
     setIsChannelLoading(true)
@@ -99,6 +105,7 @@ const Page = () => {
   useEffect(() => {
     handleGetChannel()
     handleGetMessages()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
   useEffect(() => {
@@ -131,7 +138,6 @@ const Page = () => {
         setMessages(messages.concat(newMessageAltered))
       })
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newMessage])
 
@@ -169,7 +175,7 @@ const Page = () => {
                   <div key={message.id} className='channel__message_item py-2'>
                     <div className='mb-2 text-gray-600 text-sm font-extralight'>
                       <span className='font-semibold'>{message.author.username}</span> -
-                      <span className='ml-1'>{new Date(message.inserted_at).toString()}</span>
+                      <span className='ml-1'>{humanifyDate({ dateIso: message.inserted_at })}</span>
                     </div>
                     <div className='channel__message_item_content'>
                       <span
