@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { getCookie, deleteCookie } from 'cookies-next'
 import { toast } from 'react-toastify'
+import { useParams } from 'next/navigation'
 
 import LoaderComponent from '@/components/LoaderComponent'
 
@@ -19,6 +20,8 @@ import { logout } from '@/actions/user'
 import { getChannels, createChannel } from '@/actions/channel'
 
 const SibebarComponent = () => {
+  const { id } = useParams()
+
   const userCookie = getCookie('user')
   const user = userCookie ? JSON.parse(userCookie) : null
 
@@ -109,18 +112,14 @@ const SibebarComponent = () => {
                 key={channel.id}
                 href='/channels/[id]'
                 as={`/channels/${channel.id}`}
-                className='channel_list_item_channel border-b'
+                className={`${channel.id === Number(id) ? 'bg-emerald-600 text-white' : 'text-gray-600'} channel_list_item_channel border-b`}
               >
-                <div className='channel__item text-gray-500 py-1 text-sm flex items-center '>
+                <div className='channel__item  py-1 text-sm flex items-center '>
                   <FontAwesomeIcon className='mr-2' icon={faHashtag} style={{ fontSize: 14 }} />
                   {channel.slug}
                 </div>
                 <button className='mr-4'>
-                  <FontAwesomeIcon
-                    className='mr-2 text-gray-600'
-                    icon={faTrash}
-                    style={{ fontSize: 14 }}
-                  />
+                  <FontAwesomeIcon className='mr-2 ' icon={faTrash} style={{ fontSize: 14 }} />
                 </button>
               </Link>
             ))}
