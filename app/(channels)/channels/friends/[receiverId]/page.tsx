@@ -129,9 +129,7 @@ const Page = () => {
   }, [])
 
   useEffect(() => {
-    if (newMessage && newMessage?.new?.receiver_id === receiver.id) {
-      setDirectMessages(directMessages.concat(newMessage.new))
-    }
+    if (newMessage) setDirectMessages(directMessages.concat(newMessage.new))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newMessage])
 
