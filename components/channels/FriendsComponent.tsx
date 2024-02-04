@@ -1,8 +1,38 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserFriends, faUser } from '@fortawesome/free-solid-svg-icons'
+import { toast } from 'react-toastify'
+
+import LoaderComponent from '@/components/LoaderComponent'
+
+import { getUsers } from '@/actions/user'
 
 const FriendsComponent = () => {
+  const [users, setUsers] = useState<Array<{ [key: string]: any }>>([])
+
+  const [isUsersLoading, setIsUsersLoading] = useState<boolean>(false)
+
+  const handleGetUsers = () => {
+    setIsUsersLoading(true)
+
+    getUsers()
+      .then(({ error, data }) => {
+        if (error) {
+          toast.error('An error occurred while getting users')
+          return
+        }
+        setUsers(data)
+      })
+      .finally(() => setIsUsersLoading(false))
+  }
+
+  useEffect(() => {
+    handleGetUsers()
+  }, [])
+
   return (
     <div className='channel__direct_message'>
       <div className='channel__direct_message_header border-b'>
@@ -12,12 +42,22 @@ const FriendsComponent = () => {
         </span>
       </div>
       <div className='channel__direct_message_friends border-l'>
-        <Link href='#'>
-          <div className='channel__direct_message_friend text-sm flex items-center text-gray-600 py-4 px-4 border-b'>
-            <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 14 }} />
-            user@gmail.com
+        {isUsersLoading ? (
+          <div className='flex justify-center items-center h-full'>
+            <LoaderComponent />
           </div>
-        </Link>
+        ) : (
+          <>
+            {users.map((user) => (
+              <Link key={user.id} href='#'>
+                <div className='channel__direct_message_friend text-sm flex items-center text-gray-600 py-4 px-4 border-b'>
+                  <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 14 }} />
+                  {user.username}
+                </div>
+              </Link>
+            ))}
+          </>
+        )}
       </div>
     </div>
   )

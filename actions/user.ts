@@ -1,5 +1,9 @@
 import { supabase } from '@/lib/supabase'
 
+export const getUsers = async () => {
+  return await supabase.from('users').select(`*`)
+}
+
 export const getUser = async ({ userId }: { userId: string }) => {
   return await supabase.from('users').select(`*`).eq('id', userId)
 }
