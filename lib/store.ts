@@ -1,6 +1,19 @@
 import { create } from 'zustand'
+import { persistNSync } from 'persist-and-sync'
 
-export const useUserStore = create((set) => ({
-  user: {},
-  setUser: (value: any) => set(() => ({ user: value }))
-}))
+type TStore = {
+  user: Object
+  setUser: (user: Object) => void
+}
+
+const useStore = create<TStore>(
+  persistNSync(
+    (set) => ({
+      user: {},
+      setUser: (user: Object) => set(() => ({ user }))
+    }),
+    { name: 'user' }
+  )
+)
+
+export default useStore
