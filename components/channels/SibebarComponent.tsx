@@ -81,6 +81,7 @@ const SibebarComponent = () => {
         <div className='channel_create_input'>
           <input
             onChange={(e) => setChannelName(e.target.value)}
+            value={channelName}
             type='text'
             name='createChannel'
             className='channel_create_input_text block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
@@ -106,7 +107,8 @@ const SibebarComponent = () => {
             {channels.map((channel) => (
               <Link
                 key={channel.id}
-                href={`/channels/${channel.id}`}
+                href='/channels/[id]'
+                as={`/channels/${channel.id}`}
                 className='channel_list_item_channel border-b'
               >
                 <div className='channel__item text-gray-500 py-1 text-sm flex items-center '>

@@ -1,27 +1,31 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import { getCookie } from 'cookies-next'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHashtag, faPaperPlane, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faHashtag, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
 
 import LoaderComponent from '@/components/LoaderComponent'
 
 import { getChannel } from '@/actions/channel'
-import { getMessages } from '@/actions/message'
+import { getMessages, createMessage } from '@/actions/message'
 
 const Page = () => {
   const { id } = useParams()
   const userCookie = getCookie('user')
   const user = userCookie ? JSON.parse(userCookie) : null
 
+  const messagesEndRef = useRef<HTMLElement | null>(null) as any
+
   const [messages, setMessages] = useState<Array<{ [key: string]: any }>>([])
-  const [channel, setChannel] = useState<{ slug: string }>({ slug: '' })
+  const [channel, setChannel] = useState<{ id: number; slug: string }>({ id: 0, slug: '' })
+  const [message, setMessage] = useState<string>('')
 
   const [isChannelLoading, setIsChannelLoading] = useState<boolean>(false)
   const [isMessagesLoading, setIsMessagesLoading] = useState<boolean>(false)
+  const [isMessageCreating, setIsMessageCreating] = useState<boolean>(false)
 
   const handleGetChannel = () => {
     setIsChannelLoading(true)
@@ -50,6 +54,37 @@ const Page = () => {
       })
       .finally(() => setIsMessagesLoading(false))
   }
+
+  const handleCreateMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (message === '') return
+
+    if (e.keyCode === 13) {
+      setIsMessageCreating(true)
+
+      createMessage({ message, channelId: channel.id, userId: user.user.id })
+        .then(({ error }) => {
+          if (error) {
+            toast.error('An error occurred while getting messages')
+            return
+          }
+
+          handleGetMessages()
+        })
+        .finally(() => {
+          setMessage('')
+          setIsMessageCreating(false)
+        })
+    }
+  }
+
+  useEffect(() => {
+    if (Array.isArray(messages) && messages.length !== 0) {
+      messagesEndRef.current.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth'
+      })
+    }
+  }, [messages])
 
   useEffect(() => {
     handleGetChannel()
@@ -102,6 +137,7 @@ const Page = () => {
                     </div>
                   </div>
                 ))}
+                <div ref={messagesEndRef} style={{ height: 0 }}></div>
               </>
             )}
           </>
@@ -110,15 +146,15 @@ const Page = () => {
 
       <div className='channel__message_input border-t'>
         <input
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => handleCreateMessage(e)}
+          value={message}
+          disabled={isMessageCreating}
           type='text'
           name='messageInput'
           placeholder='Type your message...'
           className='channel_message_input_text block px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
         />
-        <button className='channel_create_input_button w-28 px-6 py-2.5 text-sm font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-emerald-600 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'>
-          <FontAwesomeIcon className='mr-2' icon={faPaperPlane} style={{ fontSize: 14 }} />
-          Send
-        </button>
       </div>
     </div>
   )
