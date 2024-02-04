@@ -4,28 +4,34 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
+import { setCookie } from 'cookies-next'
 
-import { supabase } from '@lib/supabase'
+import { login, register } from '@/actions/user'
 
 const AuthComponent = () => {
   const router = useRouter()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('')
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [isLoggingIn, setIsLoggingIn] = useState(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(true)
 
-  const handleLogin = async () => {
-    const { error, data } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    })
+  const handleLogin = () => {
+    setIsLoading(true)
 
-    if (error) return toast.error(error.message)
-
-    router.replace('/channels/1')
+    login({ email, password })
+      .then(({ error, data }) => {
+        if (error) return toast.error(error.message)
+        setCookie('user', data)
+        router.push('/channels/1')
+      })
+      .finally(() => {
+        setEmail('')
+        setPassword('')
+        setIsLoading(false)
+      })
   }
 
   const handleRegister = async () => {
@@ -33,17 +39,20 @@ const AuthComponent = () => {
       toast.error('Sorry, password dont match')
       return
     }
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`
-      }
-    })
 
-    if (error) return toast.error(error.message)
+    setIsLoading(true)
 
-    toast.success('Signup successful, confirmation mail should be sent soon!')
+    register({ email, password })
+      .then(({ error }) => {
+        if (error) return toast.error(error.message)
+        toast.success('Signup successful, confirmation mail should be sent soon!')
+      })
+      .finally(() => {
+        setEmail('')
+        setPassword('')
+        setPasswordConfirm('')
+        setIsLoading(false)
+      })
   }
 
   return (
