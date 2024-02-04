@@ -141,7 +141,6 @@ main {
   font-size: 12px;
   padding: 10px 10px;
   border-radius: 10px;
-  max-width: 90%;
 }
 
 .channel__message_item_content_btn {
