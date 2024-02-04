@@ -11,12 +11,12 @@ import { login, register } from '@/actions/user'
 const AuthComponent = () => {
   const router = useRouter()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('')
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [isLoggingIn, setIsLoggingIn] = useState(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(true)
 
   const handleLogin = () => {
     setIsLoading(true)

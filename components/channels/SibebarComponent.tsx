@@ -11,22 +11,43 @@ import {
   faTrash
 } from '@fortawesome/free-solid-svg-icons'
 import { deleteCookie } from 'cookies-next'
+import { toast } from 'react-toastify'
+
+import LoaderComponent from '@/components/LoaderComponent'
 
 import { logout } from '@/actions/user'
+import { getChannels } from '@/actions/channel'
 
 const SibebarComponent = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [channels, setChannels] = useState<Array<{ [key: string]: any }>>([])
+
+  const [isLogoutLoading, setIsLogoutLoading] = useState<boolean>(false)
+  const [isChannelLoading, setIsChannelLoading] = useState<boolean>(false)
 
   const handleLogout = () => {
-    setIsLoading(true)
+    setIsLogoutLoading(true)
 
     logout()
       .then(() => {
         deleteCookie('user')
         window.location.href = '/'
       })
-      .finally(() => setIsLoading(false))
+      .finally(() => setIsLogoutLoading(false))
   }
+
+  useEffect(() => {
+    setIsChannelLoading(true)
+
+    getChannels()
+      .then(({ error, data }) => {
+        if (error) {
+          toast.error('An error occurred while getting channels')
+          return
+        }
+        setChannels(data)
+      })
+      .finally(() => setIsChannelLoading(false))
+  }, [])
 
   return (
     <div className='channel__sidebar'>
@@ -46,19 +67,29 @@ const SibebarComponent = () => {
       </div>
 
       <div className='channel_list border-r'>
-        <Link href='#' className='channel_list_item_channel border-b'>
-          <div className='channel__item text-gray-500 py-1 text-sm flex items-center '>
-            <FontAwesomeIcon className='mr-2' icon={faHashtag} style={{ fontSize: 14 }} />
-            Channel 1
+        {isChannelLoading ? (
+          <div className='flex justify-center items-center h-full'>
+            <LoaderComponent />
           </div>
-          <button className='mr-4'>
-            <FontAwesomeIcon
-              className='mr-2 text-gray-600'
-              icon={faTrash}
-              style={{ fontSize: 14 }}
-            />
-          </button>
-        </Link>
+        ) : (
+          <>
+            {channels.map((channel) => (
+              <Link key={channel.id} href='#' className='channel_list_item_channel border-b'>
+                <div className='channel__item text-gray-500 py-1 text-sm flex items-center '>
+                  <FontAwesomeIcon className='mr-2' icon={faHashtag} style={{ fontSize: 14 }} />
+                  {channel.slug}
+                </div>
+                <button className='mr-4'>
+                  <FontAwesomeIcon
+                    className='mr-2 text-gray-600'
+                    icon={faTrash}
+                    style={{ fontSize: 14 }}
+                  />
+                </button>
+              </Link>
+            ))}
+          </>
+        )}
       </div>
 
       <div className='channel_logout'>
@@ -70,7 +101,7 @@ const SibebarComponent = () => {
           className='channel_create_input_button w-48 px-6 py-2.5 text-sm font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-emerald-600 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
         >
           <FontAwesomeIcon className='mr-2' icon={faRightFromBracket} style={{ fontSize: 14 }} />
-          {isLoading ? 'Loading...' : 'Logout'}
+          {isLogoutLoading ? 'Loading...' : 'Logout'}
         </button>
       </div>
     </div>
