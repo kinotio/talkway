@@ -11,6 +11,9 @@ import LoaderComponent from '@/components/LoaderComponent'
 
 import { getChannel } from '@/actions/channel'
 import { getMessages, createMessage } from '@/actions/message'
+import { getUser } from '@/actions/user'
+
+import { supabase } from '@/lib/supabase'
 
 const Page = () => {
   const { id } = useParams()
@@ -19,6 +22,8 @@ const Page = () => {
 
   const messagesEndRef = useRef<HTMLElement | null>(null) as any
 
+  const [user, setUser] = useState<{ [key: string]: any }>({})
+
   const [messages, setMessages] = useState<Array<{ [key: string]: any }>>([])
   const [channel, setChannel] = useState<{ id: number; slug: string }>({ id: 0, slug: '' })
   const [message, setMessage] = useState<string>('')
@@ -26,6 +31,12 @@ const Page = () => {
   const [isChannelLoading, setIsChannelLoading] = useState<boolean>(false)
   const [isMessagesLoading, setIsMessagesLoading] = useState<boolean>(false)
   const [isMessageCreating, setIsMessageCreating] = useState<boolean>(false)
+  const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
+
+  const [newMessage, handleNewMessage] = useState<{ new: any }>({ new: null })
+  const [deletedMessage, handleDeletedMessage] = useState<{ old: any }>({
+    old: null
+  })
 
   const handleGetChannel = () => {
     setIsChannelLoading(true)
@@ -67,7 +78,6 @@ const Page = () => {
             toast.error('An error occurred while getting messages')
             return
           }
-
           handleGetMessages()
         })
         .finally(() => {
@@ -75,6 +85,20 @@ const Page = () => {
           setIsMessageCreating(false)
         })
     }
+  }
+
+  const handleGetUser = () => {
+    setIsUserLoading(true)
+
+    getUser({ userId })
+      .then(({ error, data }) => {
+        if (error) {
+          toast.error('An error occurred while getting user')
+          return
+        }
+        setUser(data[0])
+      })
+      .finally(() => setIsUserLoading(false))
   }
 
   useEffect(() => {
@@ -87,9 +111,44 @@ const Page = () => {
   }, [messages])
 
   useEffect(() => {
+    handleGetUser()
     handleGetChannel()
     handleGetMessages()
   }, [id])
+
+  useEffect(() => {
+    const messageListener = supabase
+      .channel('public:messages')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) =>
+        handleNewMessage({ new: payload.new })
+      )
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'messages' }, (payload) =>
+        handleDeletedMessage({ old: payload.old })
+      )
+      .subscribe() as any
+
+    return () => {
+      supabase.removeChannel(supabase.channel(messageListener))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (newMessage && newMessage?.new?.channel_id === channel.id) {
+      const newMessageAltered = {
+        ...newMessage.new,
+        author: user
+      }
+      setMessages(messages.concat(newMessageAltered))
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newMessage])
+
+  useEffect(() => {
+    if (deletedMessage)
+      setMessages(messages.filter((message) => message.id !== deletedMessage.old.id))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deletedMessage])
 
   return (
     <div className='channel__messages'>

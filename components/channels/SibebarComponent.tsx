@@ -143,7 +143,7 @@ const SibebarComponent = () => {
 
   return (
     <div className='channel__sidebar'>
-      <div className='channel_create'>
+      <div className='channel_create border-r'>
         <div className='channel_create_input'>
           <input
             onChange={(e) => setChannelName(e.target.value)}

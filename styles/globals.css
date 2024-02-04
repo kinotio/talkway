@@ -58,7 +58,6 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #34d399;
 }
 
 .channel_create_input {
