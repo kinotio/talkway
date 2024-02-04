@@ -196,7 +196,7 @@ const SibebarComponent = () => {
                 {channel.created_by === user.id ? (
                   <button
                     onClick={() => handleDeleteChannel({ channelId: channel.id })}
-                    className='text-gray-600 hover:text-white hover:bg-red-600 px-2 py-2 flex justify-center items-center'
+                    className='text-gray-600 hover:text-white hover:bg-red-600 px-6 py-2 flex justify-center items-center'
                   >
                     <FontAwesomeIcon icon={faTrash} style={{ fontSize: 14 }} />
                   </button>

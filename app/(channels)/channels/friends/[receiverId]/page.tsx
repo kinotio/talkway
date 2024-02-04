@@ -164,18 +164,16 @@ const Page = () => {
             ) : (
               <>
                 {directMessages.map((message) => (
-                  <div key={message.id} className='channel__message_item py-2'>
-                    <div className='mb-2 text-gray-600 text-sm font-extralight'>
+                  <div
+                    key={message.id}
+                    className={`${message.sender_id === userId ? 'items-end' : 'items-start'} channel__message_item py-2`}
+                  >
+                    <div className='mb-2 text-gray-600 text-xs font-extralight items-end'>
                       <span className='ml-1'>{humanifyDate({ dateIso: message.inserted_at })}</span>
                     </div>
                     <div className='channel__message_item_content'>
-                      <span
-                        className={`${message.sender_id === userId ? 'bg-blue-400' : 'bg-emerald-400'} channel__message_item_content_msg text-white`}
-                      >
-                        {message.message}
-                      </span>
-                      {message.send_id === userId ? (
-                        <div className='channel__message_item_content_btn'>
+                      {message.sender_id === userId ? (
+                        <div className='channel__message_item_content_btn mr-6'>
                           <button
                             onClick={() =>
                               handleDeleteDirectMessage({ directMessageId: message.id })
@@ -186,6 +184,12 @@ const Page = () => {
                           </button>
                         </div>
                       ) : null}
+
+                      <span
+                        className={`${message.sender_id === userId ? 'bg-blue-400' : 'bg-emerald-400'} channel__message_item_content_msg text-white`}
+                      >
+                        {message.message}
+                      </span>
                     </div>
                   </div>
                 ))}
