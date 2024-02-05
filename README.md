@@ -4,6 +4,14 @@
 ![license](https://img.shields.io/github/license/kinotio/talkway?color=success)
 [![Made with Supabase](https://supabase.com/badge-made-with-supabase-dark.svg)](https://supabase.com)
 
+<p align="center">
+  <img
+    src="screenshot.png"
+    alt="Talkway"
+    style="width:100%;"
+  />
+</p>
+
 Talkway is not just another messaging app; it's a vibrant community where ideas flow, friendships blossom, and collaboration thrives. With intuitive features and a user-friendly interface, Talkway empowers you to engage in conversations that matter, whether you're connecting with friends, colleagues, or like-minded individuals from around the world.
 
 > For those how to need to test it , you can directly check it on vercel deployment [here](https://talkway.vercel.app/)
