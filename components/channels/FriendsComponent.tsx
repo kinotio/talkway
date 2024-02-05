@@ -6,12 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserFriends, faUser } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
 import { getCookie } from 'cookies-next'
+import { useParams } from 'next/navigation'
 
 import LoaderComponent from '@/components/LoaderComponent'
 
 import { getUsers } from '@/actions/user'
 
 const FriendsComponent = () => {
+  const { receiverId } = useParams()
+
   const userId = getCookie('__user') as string
 
   const [users, setUsers] = useState<Array<{ [key: string]: any }>>([])
@@ -53,10 +56,14 @@ const FriendsComponent = () => {
         ) : (
           <>
             {users.map((user) => (
-              <Link key={user.id} href={`/channels/friends/${user.id}`}>
-                <div className='channel__direct_message_friend text-sm flex items-center text-gray-600 py-4 px-4 border-b'>
+              <Link
+                className={`${user.id === receiverId?.toString() ? 'bg-emerald-600 text-white' : 'text-gray-600'}`}
+                key={user.id}
+                href={`/channels/friends/${user.id}`}
+              >
+                <div className='channel__direct_message_friend text-sm flex items-center py-4 px-4 border-b'>
                   <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 14 }} />
-                  {user?.username}
+                  <span className='break-words'>{user?.username}</span>
                 </div>
               </Link>
             ))}

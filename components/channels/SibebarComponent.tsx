@@ -208,13 +208,16 @@ const SibebarComponent = () => {
       </div>
 
       <div className='channel_logout'>
-        <span className='pb-2 text-sm font-extralight text-white flex items-center'>
-          <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 12 }} />
-          {isUserLoading ? '...' : <> {user?.username}</>}
-        </span>
+        <div className='channel_logout_username'>
+          <div className='pb-2 text-sm font-extralight text-white flex items-center break-words'>
+            <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 12 }} />
+            <span className='break-word'>{isUserLoading ? '...' : <> {user?.username}</>}</span>
+          </div>
+        </div>
+
         <button
           onClick={handleLogout}
-          className='channel_create_input_button w-48 px-6 py-2.5 text-sm font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-emerald-600 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
+          className='channel_create_input_button w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-emerald-600 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
         >
           <FontAwesomeIcon className='mr-2' icon={faRightFromBracket} style={{ fontSize: 14 }} />
           {isLogoutLoading ? 'Loading...' : 'Logout'}
