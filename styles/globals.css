@@ -29,6 +29,9 @@ main {
 
 .channel__header {
   padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .channel__content {
@@ -89,6 +92,11 @@ main {
   justify-content: center;
   align-items: center;
   background-color: #34d399;
+  padding: 0 15px;
+}
+
+.channel_logout_username {
+  text-wrap: wrap;
 }
 
 .channel__messages {
