@@ -193,7 +193,7 @@ const SibebarComponent = () => {
                   <FontAwesomeIcon className='mr-2' icon={faHashtag} style={{ fontSize: 14 }} />
                   {channel?.slug}
                 </div>
-                {channel.created_by === user.id ? (
+                {channel.created_by === user?.id ? (
                   <button
                     onClick={() => handleDeleteChannel({ channelId: channel.id })}
                     className='text-gray-600 hover:text-white hover:bg-red-600 px-6 py-2 flex justify-center items-center'
