@@ -60,3 +60,21 @@ export const deleteDirectMessage = async ({ directMessageId }: { directMessageId
 export const deleteMessage = async ({ messageId }: { messageId: number }) => {
   return await supabase.from('messages').delete().match({ id: messageId })
 }
+
+export const listenMessage = ({
+  handleNewMessage,
+  handleDeletedMessage
+}: {
+  handleNewMessage: Function
+  handleDeletedMessage: Function
+}) => {
+  return supabase
+    .channel('public:messages')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) =>
+      handleNewMessage({ new: payload.new })
+    )
+    .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'messages' }, (payload) =>
+      handleDeletedMessage({ old: payload.old })
+    )
+    .subscribe() as any
+}
