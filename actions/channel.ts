@@ -24,3 +24,21 @@ export const createChannel = async ({
 export const deleteChannel = async ({ channelId }: { channelId: number }) => {
   return await supabase.from('channels').delete().match({ id: channelId })
 }
+
+export const listenChannel = ({
+  handleNewChannel,
+  handleDeletedChannel
+}: {
+  handleNewChannel: Function
+  handleDeletedChannel: Function
+}) => {
+  return supabase
+    .channel('public:channels')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'channels' }, (payload) =>
+      handleNewChannel({ new: payload.new })
+    )
+    .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'channels' }, (payload) =>
+      handleDeletedChannel({ old: payload.old })
+    )
+    .subscribe() as any
+}
