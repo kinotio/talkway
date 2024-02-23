@@ -23,3 +23,21 @@ export const register = async ({ email, password }: { email: string; password: s
 export const logout = async () => {
   return await supabase.auth.signOut()
 }
+
+export const listenUser = async ({
+  handleNewUser,
+  handleDeletedUser
+}: {
+  handleNewUser: Function
+  handleDeletedUser: Function
+}) => {
+  return supabase
+    .channel('public:users')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'users' }, (payload) =>
+      handleNewUser({ new: payload.new })
+    )
+    .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'users' }, (payload) =>
+      handleDeletedUser({ old: payload.old })
+    )
+    .subscribe() as any
+}
