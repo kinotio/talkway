@@ -18,7 +18,7 @@ import { useParams } from 'next/navigation'
 import LoaderComponent from '@/components/LoaderComponent'
 
 import { logout, getUser } from '@/actions/user'
-import { getChannels, createChannel, deleteChannel } from '@/actions/channel'
+import { getChannels, createChannel, deleteChannel, listenChannel } from '@/actions/channel'
 
 import { supabase } from '@/lib/supabase'
 
@@ -125,21 +125,14 @@ const SibebarComponent = () => {
   useEffect(() => {
     handleGetUser()
     handleGetChannels()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    const channelListener = supabase
-      .channel('public:channels')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'channels' }, (payload) =>
-        handleNewChannel({ new: payload.new })
-      )
-      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'channels' }, (payload) =>
-        handleDeletedChannel({ old: payload.old })
-      )
-      .subscribe() as any
-
+  useEffect(() => {
+    const channelListener = listenChannel({ handleNewChannel, handleDeletedChannel })
     return () => {
       supabase.removeChannel(supabase.channel(channelListener))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

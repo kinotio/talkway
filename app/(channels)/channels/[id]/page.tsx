@@ -11,7 +11,7 @@ import moment from 'moment'
 import LoaderComponent from '@/components/LoaderComponent'
 
 import { getChannel } from '@/actions/channel'
-import { getMessages, createMessage, deleteMessage } from '@/actions/message'
+import { getMessages, createMessage, deleteMessage, listenMessage } from '@/actions/message'
 import { getUser } from '@/actions/user'
 
 import { supabase } from '@/lib/supabase'
@@ -109,16 +109,7 @@ const Page = () => {
   }, [id])
 
   useEffect(() => {
-    const messageListener = supabase
-      .channel('public:messages')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (payload) =>
-        handleNewMessage({ new: payload.new })
-      )
-      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'messages' }, (payload) =>
-        handleDeletedMessage({ old: payload.old })
-      )
-      .subscribe() as any
-
+    const messageListener = listenMessage({ handleNewMessage, handleDeletedMessage })
     return () => {
       supabase.removeChannel(supabase.channel(messageListener))
     }
