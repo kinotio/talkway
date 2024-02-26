@@ -10,7 +10,9 @@ import { useParams } from 'next/navigation'
 
 import LoaderComponent from '@/components/LoaderComponent'
 
-import { getUsers } from '@/actions/user'
+import { getUsers, listenUser } from '@/actions/user'
+
+import { supabase } from '@/lib/supabase'
 
 const FriendsComponent = () => {
   const { receiverId } = useParams()
@@ -20,6 +22,11 @@ const FriendsComponent = () => {
   const [users, setUsers] = useState<Array<{ [key: string]: any }>>([])
 
   const [isUsersLoading, setIsUsersLoading] = useState<boolean>(false)
+
+  const [newUser, handleNewUser] = useState<{ new: any }>({ new: null })
+  const [deletedUser, handleDeletedUser] = useState<{ old: any }>({
+    old: null
+  })
 
   const handleGetUsers = () => {
     setIsUsersLoading(true)
@@ -39,6 +46,23 @@ const FriendsComponent = () => {
     handleGetUsers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    const userListener = listenUser({ handleNewUser, handleDeletedUser })
+    return () => {
+      supabase.removeChannel(supabase.channel(userListener))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (newUser) setUsers(users.concat(newUser.new))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newUser])
+
+  useEffect(() => {
+    if (deletedUser) setUsers(users.filter((user) => user.id !== deletedUser.old.id))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deletedUser])
 
   return (
     <div className='channel__direct_message'>

@@ -24,7 +24,7 @@ export const logout = async () => {
   return await supabase.auth.signOut()
 }
 
-export const listenUser = async ({
+export const listenUser = ({
   handleNewUser,
   handleDeletedUser
 }: {
