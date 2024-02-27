@@ -27,8 +27,8 @@ export const getDirectMessages = async ({
   senderId,
   receiverId
 }: {
-  senderId: any
-  receiverId: any
+  senderId: string
+  receiverId: string
 }) => {
   return await supabase
     .from('direct_messages')
