@@ -57,7 +57,7 @@ const AuthComponent = () => {
   }
 
   return (
-    <section className='w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-lg py-36'>
+    <section className='w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-lg lg:pt-36 lg:pb-36 py-20'>
       <div className='flex justify-center mx-auto'>
         <Image
           className='h-auto w-auto pr-2'

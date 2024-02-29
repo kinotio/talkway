@@ -5,7 +5,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 const HeroComponent = () => {
   return (
     <section className='relative isolate px-6 lg:px-8'>
-      <div className='mx-auto py-44'>
+      <div className='mx-auto lg:pt-44 lg:pb-44'>
         <div className='text-center'>
           <h1 className='text-5xl text-gray-900 font-semibold'>
             <span className='text-emerald-400'>Seamless</span> conversations and{' '}
