@@ -16,8 +16,24 @@ export const login = async ({ email, password }: { email: string; password: stri
   return await supabase.auth.signInWithPassword({ email, password })
 }
 
-export const register = async ({ email, password }: { email: string; password: string }) => {
-  return await supabase.auth.signUp({ email, password })
+export const register = async ({
+  name,
+  email,
+  password
+}: {
+  name: string
+  email: string
+  password: string
+}) => {
+  return await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        name
+      }
+    }
+  })
 }
 
 export const logout = async () => {
