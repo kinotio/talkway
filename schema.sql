@@ -6,8 +6,10 @@ create type public.user_status as enum ('ONLINE', 'OFFLINE');
 -- USERS
 create table public.users (
   id          uuid not null primary key, -- UUID from auth.users
-  username    text,
-  status      user_status default 'OFFLINE'::public.user_status
+  email       text,
+  status      user_status default 'OFFLINE'::public.user_status,
+  name        text,
+  created_at  timestamp with time zone default timezone('utc'::text, now()) not null
 );
 comment on table public.users is 'Profile data for each user.';
 comment on column public.users.id is 'References the internal Supabase Auth user.';
@@ -121,8 +123,8 @@ create function public.handle_new_user()
 returns trigger as $$
 declare is_admin boolean;
 begin
-  insert into public.users (id, username)
-  values (new.id, new.email);
+  insert into public.users (id, email, name)
+  values (new.id, new.email, new.name);
 
   select count(*) = 1 from auth.users into is_admin;
 
@@ -161,9 +163,9 @@ alter publication supabase_realtime add table public.direct_messages;
 alter publication supabase_realtime add table public.users;
 
 -- DUMMY DATA
-insert into public.users (id, username)
+insert into public.users (id, email, name)
 values
-    ('8d0fd2b3-9ca7-4d9e-a95f-9e13dded323e', 'supabot');
+    ('8d0fd2b3-9ca7-4d9e-a95f-9e13dded323e', 'bot@talkway.com', 'Talkbot');
 
 insert into public.channels (slug, created_by)
 values
@@ -180,4 +182,3 @@ values
     ('admin', 'channels.delete'),
     ('admin', 'messages.delete'),
     ('moderator', 'messages.delete');
-
