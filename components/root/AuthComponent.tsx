@@ -11,6 +11,7 @@ import { login, register } from '@/actions/user'
 const AuthComponent = () => {
   const router = useRouter()
 
+  const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [passwordConfirm, setPasswordConfirm] = useState<string>('')
@@ -43,12 +44,13 @@ const AuthComponent = () => {
 
     setIsLoading(true)
 
-    register({ email, password })
+    register({ name, email, password })
       .then(({ error }) => {
         if (error) return toast.error(error.message)
         toast.success('Signup successful, confirmation mail should be sent soon!')
       })
       .finally(() => {
+        setName('')
         setEmail('')
         setPassword('')
         setPasswordConfirm('')
@@ -69,7 +71,22 @@ const AuthComponent = () => {
       </div>
 
       <form className='mt-6'>
-        <div>
+        {!isLoggingIn ? (
+          <div>
+            <label htmlFor='name' className='block text-sm text-gray-800'>
+              Name
+            </label>
+            <input
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              type='text'
+              name='name'
+              className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
+            />
+          </div>
+        ) : null}
+
+        <div className='mt-4'>
           <label htmlFor='email' className='block text-sm text-gray-800'>
             Email
           </label>
