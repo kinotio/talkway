@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
@@ -18,7 +19,7 @@ const HeroComponent = () => {
           </p>
         </div>
 
-        <div className='text-center mt-4 flex justify-center'>
+        <div className='text-center mt-4 flex justify-center flex-col gap-4'>
           <Link
             href='https://github.com/kinotio/talkway'
             className='mx-2 text-black'
@@ -26,6 +27,16 @@ const HeroComponent = () => {
           >
             <FontAwesomeIcon icon={faGithub} style={{ fontSize: 20 }} />
           </Link>
+          <div className='flex text-center justify-center gap-4 items-center'>
+            <span className='text-md text-gray-600'>Powered by</span>
+            <Image
+              className='h-auto w-auto'
+              src='/assets/images/kinotio-logo-dark.png'
+              alt='Kinotio Logo'
+              width='100'
+              height='100'
+            />
+          </div>
         </div>
       </div>
     </section>
