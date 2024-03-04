@@ -18,10 +18,12 @@ export const login = async ({ email, password }: { email: string; password: stri
 
 export const register = async ({
   name,
+  username,
   email,
   password
 }: {
   name: string
+  username: string
   email: string
   password: string
 }) => {
@@ -30,7 +32,8 @@ export const register = async ({
     password,
     options: {
       data: {
-        name
+        name,
+        username
       }
     }
   })

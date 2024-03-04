@@ -1,3 +1,20 @@
+-- Drop tables if exists
+drop table if exists public.users cascade;
+drop table if exists public.channels cascade;
+drop table if exists public.messages cascade;
+drop table if exists public.direct_messages cascade;
+drop table if exists public.user_roles cascade;
+drop table if exists public.role_permissions cascade;
+
+-- Drop types if already exists
+drop type if exists public.app_permission cascade;
+drop type if exists public.app_role cascade;
+drop type if exists public.user_status cascade;
+
+-- Drop functions if already exists
+drop function if exists public.handle_new_user() cascade;
+drop function if exists public.authorize() cascade;
+
 -- Custom types
 create type public.app_permission as enum ('channels.delete', 'messages.delete');
 create type public.app_role as enum ('admin', 'moderator');
@@ -6,8 +23,9 @@ create type public.user_status as enum ('ONLINE', 'OFFLINE');
 -- USERS
 create table public.users (
   id          uuid not null primary key, -- UUID from auth.users
-  email       text,
+  email       text unique,
   status      user_status default 'OFFLINE'::public.user_status,
+  username    text unique,
   name        text,
   created_at  timestamp with time zone default timezone('utc'::text, now()) not null
 );
@@ -123,8 +141,8 @@ create function public.handle_new_user()
 returns trigger as $$
 declare is_admin boolean;
 begin
-  insert into public.users (id, email, name)
-  values (new.id, new.email, new.name);
+  insert into public.users (id, email)
+  values (new.id, new.email);
 
   select count(*) = 1 from auth.users into is_admin;
 
@@ -163,9 +181,9 @@ alter publication supabase_realtime add table public.direct_messages;
 alter publication supabase_realtime add table public.users;
 
 -- DUMMY DATA
-insert into public.users (id, email, name)
+insert into public.users (id, email, username, name)
 values
-    ('8d0fd2b3-9ca7-4d9e-a95f-9e13dded323e', 'bot@talkway.com', 'Talkbot');
+    ('8d0fd2b3-9ca7-4d9e-a95f-9e13dded323e', 'bot@talkway.com', 'talkbot', 'Talkbot');
 
 insert into public.channels (slug, created_by)
 values
