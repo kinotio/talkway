@@ -23,10 +23,10 @@ create type public.user_status as enum ('ONLINE', 'OFFLINE');
 -- USERS
 create table public.users (
   id          uuid not null primary key, -- UUID from auth.users
-  email       text unique,
+  email       text not null unique,
   status      user_status default 'OFFLINE'::public.user_status,
-  username    text unique,
-  name        text,
+  username    text not null unique,
+  fullname    text not null,
   created_at  timestamp with time zone default timezone('utc'::text, now()) not null
 );
 comment on table public.users is 'Profile data for each user.';
@@ -141,8 +141,8 @@ create function public.handle_new_user()
 returns trigger as $$
 declare is_admin boolean;
 begin
-  insert into public.users (id, email)
-  values (new.id, new.email);
+  insert into public.users (id, email, username, fullname)
+  values (new.id, new.email, new.raw_user_meta_data ->> 'username', new.raw_user_meta_data ->> 'fullname');
 
   select count(*) = 1 from auth.users into is_admin;
 
@@ -181,7 +181,7 @@ alter publication supabase_realtime add table public.direct_messages;
 alter publication supabase_realtime add table public.users;
 
 -- DUMMY DATA
-insert into public.users (id, email, username, name)
+insert into public.users (id, email, username, fullname)
 values
     ('8d0fd2b3-9ca7-4d9e-a95f-9e13dded323e', 'bot@talkway.com', 'talkbot', 'Talkbot');
 
