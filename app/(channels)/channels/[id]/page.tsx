@@ -168,7 +168,13 @@ const Page = () => {
                     className={`${message.user_id === userId ? 'items-end' : 'items-start'} channel__message_item py-2`}
                   >
                     <div className='mb-2 text-gray-600 text-xs font-extralight'>
-                      <span className='font-semibold'>{message.author.username}</span> -
+                      <span className='font-semibold mr-1'>
+                        {message.author.fullname}
+                        <span className='ml-1 text-xs font-semibold text-emerald-500'>
+                          ({message.author.username})
+                        </span>
+                      </span>
+                      -
                       <span className='ml-1'>{humanifyDate({ dateIso: message.inserted_at })}</span>
                     </div>
                     <div className='channel__message_item_content'>

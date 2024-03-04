@@ -204,7 +204,7 @@ const SibebarComponent = () => {
         <div className='channel_logout_username'>
           <div className='pb-2 text-sm font-extralight text-white flex items-center break-words'>
             <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 12 }} />
-            <span className='break-word'>{isUserLoading ? '...' : <> {user?.username}</>}</span>
+            <span className='break-word'>{isUserLoading ? '...' : <> {user?.fullname}</>}</span>
           </div>
         </div>
 

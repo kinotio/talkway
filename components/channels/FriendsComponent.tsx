@@ -86,8 +86,11 @@ const FriendsComponent = () => {
                 href={`/channels/friends/${user.id}`}
               >
                 <div className='channel__direct_message_friend text-sm flex items-center py-4 px-4 border-b'>
-                  <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 14 }} />
-                  <span className='break-words'>{user?.username}</span>
+                  <FontAwesomeIcon className='mr-4' icon={faUser} style={{ fontSize: 14 }} />
+                  <div className='flex flex-col'>
+                    <span className='break-words'>{user?.fullname}</span>
+                    <span className='text-xs font-semibold text-emerald-500'>{user?.username}</span>
+                  </div>
                 </div>
               </Link>
             ))}
