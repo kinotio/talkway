@@ -12,7 +12,7 @@ const AuthComponent = () => {
   const router = useRouter()
 
   const [username, setUsername] = useState<string>('')
-  const [name, setName] = useState<string>('')
+  const [fullname, setFullname] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [passwordConfirm, setPasswordConfirm] = useState<string>('')
@@ -45,14 +45,15 @@ const AuthComponent = () => {
 
     setIsLoading(true)
 
-    register({ name, username, email, password })
+    register({ email, password, username, fullname })
       .then(({ error }) => {
         if (error) return toast.error(error.message)
         toast.success('Signup successful, confirmation mail should be sent soon!')
         setIsLoggingIn(true)
       })
       .finally(() => {
-        setName('')
+        setFullname('')
+        setUsername('')
         setEmail('')
         setPassword('')
         setPasswordConfirm('')
@@ -76,14 +77,14 @@ const AuthComponent = () => {
         {!isLoggingIn ? (
           <>
             <div>
-              <label htmlFor='name' className='block text-sm text-gray-800'>
-                Name
+              <label htmlFor='fullname' className='block text-sm text-gray-800'>
+                Fullname
               </label>
               <input
-                onChange={(e) => setName(e.target.value)}
-                value={name}
+                onChange={(e) => setFullname(e.target.value)}
+                value={fullname}
                 type='text'
-                name='name'
+                name='fullname'
                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
               />
             </div>

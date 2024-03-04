@@ -17,23 +17,23 @@ export const login = async ({ email, password }: { email: string; password: stri
 }
 
 export const register = async ({
-  name,
-  username,
   email,
-  password
+  password,
+  username,
+  fullname
 }: {
-  name: string
-  username: string
   email: string
   password: string
+  username: string
+  fullname: string
 }) => {
   return await supabase.auth.signUp({
     email,
     password,
     options: {
       data: {
-        name,
-        username
+        username,
+        fullname
       }
     }
   })
