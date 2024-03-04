@@ -11,6 +11,7 @@ import { login, register } from '@/actions/user'
 const AuthComponent = () => {
   const router = useRouter()
 
+  const [username, setUsername] = useState<string>('')
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -44,10 +45,11 @@ const AuthComponent = () => {
 
     setIsLoading(true)
 
-    register({ name, email, password })
+    register({ name, username, email, password })
       .then(({ error }) => {
         if (error) return toast.error(error.message)
         toast.success('Signup successful, confirmation mail should be sent soon!')
+        setIsLoggingIn(true)
       })
       .finally(() => {
         setName('')
@@ -72,18 +74,32 @@ const AuthComponent = () => {
 
       <form className='mt-6'>
         {!isLoggingIn ? (
-          <div>
-            <label htmlFor='name' className='block text-sm text-gray-800'>
-              Name
-            </label>
-            <input
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              type='text'
-              name='name'
-              className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
-            />
-          </div>
+          <>
+            <div>
+              <label htmlFor='name' className='block text-sm text-gray-800'>
+                Name
+              </label>
+              <input
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                type='text'
+                name='name'
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
+              />
+            </div>
+            <div className='mt-4'>
+              <label htmlFor='username' className='block text-sm text-gray-800'>
+                Username
+              </label>
+              <input
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
+                type='text'
+                name='username'
+                className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
+              />
+            </div>
+          </>
         ) : null}
 
         <div className='mt-4'>
