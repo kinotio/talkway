@@ -170,7 +170,9 @@ const Page = () => {
                     <div className='mb-2 text-gray-600 text-xs font-extralight'>
                       <span className='font-semibold mr-1'>
                         {message.author.fullname}
-                        <span className='ml-1 text-xs font-semibold text-emerald-500'>
+                        <span
+                          className={`${message.user_id === userId ? 'text-blue-400' : 'text-emerald-400'} ml-1 text-xs font-semibold`}
+                        >
                           ({message.author.username})
                         </span>
                       </span>

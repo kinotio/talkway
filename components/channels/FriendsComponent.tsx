@@ -97,12 +97,18 @@ const FriendsComponent = () => {
                 href={`/channels/friends/${user.id}`}
               >
                 <div className='channel__direct_message_friend text-sm flex items-center py-4 px-4 border-b'>
-                  <span className='bg-emerald-600 w-10 h-10 rounded-full flex justify-center items-center text-white mr-3'>
+                  <span
+                    className={`${user.id === receiverId?.toString() ? 'bg-white text-emerald-600' : 'bg-emerald-600 text-white'}  w-10 h-10 rounded-full flex justify-center items-center mr-3`}
+                  >
                     {getInitials({ user })}
                   </span>
                   <div className='flex flex-col'>
                     <span className='break-words'>{user?.fullname}</span>
-                    <span className='text-xs font-semibold text-emerald-500'>{user?.username}</span>
+                    <span
+                      className={`${user.id === receiverId?.toString() ? 'text-emerald-100' : 'text-emerald-500'} text-xs font-semibold `}
+                    >
+                      {user?.username}
+                    </span>
                   </div>
                 </div>
               </Link>
