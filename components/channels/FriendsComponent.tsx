@@ -19,7 +19,7 @@ const FriendsComponent = () => {
 
   const userId = getCookie('__user') as string
 
-  const [users, setUsers] = useState<Array<{ [key: string]: any }>>([])
+  const [users, setUsers] = useState<Array<TUser>>([])
 
   const [isUsersLoading, setIsUsersLoading] = useState<boolean>(false)
 
@@ -27,6 +27,17 @@ const FriendsComponent = () => {
   const [deletedUser, handleDeletedUser] = useState<{ old: any }>({
     old: null
   })
+
+  const getInitials = ({ user }: { user: TUser }) => {
+    return user ? (
+      user.fullname
+        .match(/(\b\S)?/g)
+        ?.join('')
+        .toUpperCase()
+    ) : (
+      <FontAwesomeIcon icon={faUser} style={{ fontSize: 14 }} />
+    )
+  }
 
   const handleGetUsers = () => {
     setIsUsersLoading(true)
@@ -86,7 +97,9 @@ const FriendsComponent = () => {
                 href={`/channels/friends/${user.id}`}
               >
                 <div className='channel__direct_message_friend text-sm flex items-center py-4 px-4 border-b'>
-                  <FontAwesomeIcon className='mr-4' icon={faUser} style={{ fontSize: 14 }} />
+                  <span className='bg-emerald-600 w-10 h-10 rounded-full flex justify-center items-center text-white mr-3'>
+                    {getInitials({ user })}
+                  </span>
                   <div className='flex flex-col'>
                     <span className='break-words'>{user?.fullname}</span>
                     <span className='text-xs font-semibold text-emerald-500'>{user?.username}</span>

@@ -23,9 +23,10 @@
       "@styles/*": ["./styles/*"],
       "@lib/*": ["./lib/*"],
       "@hooks/*": ["./hooks/*"],
-      "@actions/*": ["./actions/*"]
+      "@actions/*": ["./actions/*"],
+      "@typings/*": ["./typings/*"]
     },
-    "typeRoots": ["types/**/*.d.ts", "node_modules/@types"]
+    "typeRoots": ["types/**/*.d.ts", "node_modules/@types", "typings/**/*.ts"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "lib/supabase.ts"],
   "exclude": ["node_modules"]
