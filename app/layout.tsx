@@ -8,6 +8,8 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import { ToastContainer } from 'react-toastify'
 
+import Providers from '@/app/providers'
+
 const inter = Poppins({ subsets: ['latin'], weight: ['300', '500'] })
 
 config.autoAddCss = false
@@ -28,7 +30,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           theme='colored'
           autoClose={5000}
         />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
