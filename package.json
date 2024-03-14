@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"./**/*.{ts,tsx}\"",
+    "watch:sass": "sass --watch --style=compressed styles/sass/main.scss:styles/styles.min.css --no-source-map",
     "prepare": "husky"
   },
   "dependencies": {

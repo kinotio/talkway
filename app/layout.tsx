@@ -1,4 +1,5 @@
 import '@styles/globals.css'
+import '@styles/styles.min.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import 'react-toastify/dist/ReactToastify.css'
 
