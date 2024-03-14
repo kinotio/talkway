@@ -1,8 +1,8 @@
 # Talkway 🗣️✉️
 
-![build](https://github.com/kinotio/talkway/workflows/build/badge.svg?style=for-the-badge)
+![build](https://img.shields.io/github/actions/workflow/status/kinotio/talkway/build.yml?style=for-the-badge)
 ![license](https://img.shields.io/github/license/kinotio/talkway?color=success&style=for-the-badge)
-[![Made with Supabase](https://supabase.com/badge-made-with-supabase-dark.svg)](https://supabase.com)
+![supabase](https://supabase.com/badge-made-with-supabase-dark.svg)](https://supabase.com)
 
 <p align="center">
   <img
