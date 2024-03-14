@@ -1,4 +1,5 @@
 import '@styles/globals.css'
+import '@styles/styles.min.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -7,6 +8,8 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import { ToastContainer } from 'react-toastify'
+
+import Providers from '@/app/providers'
 
 const inter = Poppins({ subsets: ['latin'], weight: ['300', '500'] })
 
@@ -28,7 +31,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           theme='colored'
           autoClose={5000}
         />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

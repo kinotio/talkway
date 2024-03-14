@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"./**/*.{ts,tsx}\"",
+    "watch:sass": "sass --watch --style=compressed styles/sass/main.scss:styles/styles.min.css --no-source-map",
     "prepare": "husky"
   },
   "dependencies": {
@@ -16,9 +17,11 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.7.18",
+    "@nextui-org/react": "^2.2.10",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
     "@supabase/supabase-js": "^2.39.3",
     "cookies-next": "^4.1.1",
+    "framer-motion": "^11.0.8",
     "moment": "^2.30.1",
     "next": "14.1.0",
     "react": "^18",
