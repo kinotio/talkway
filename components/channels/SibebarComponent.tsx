@@ -28,9 +28,9 @@ const SibebarComponent = () => {
 
   const userId = getCookie('__user') as string
 
-  const [user, setUser] = useState<{ [key: string]: any }>({})
+  const [user, setUser] = useState<TUser>()
 
-  const [channels, setChannels] = useState<Array<{ [key: string]: any }>>([])
+  const [channels, setChannels] = useState<Array<TChannel>>([])
   const [channelName, setChannelName] = useState<string>('')
 
   const [isLogoutLoading, setIsLogoutLoading] = useState<boolean>(false)
@@ -54,6 +54,8 @@ const SibebarComponent = () => {
       .replace(/--+/g, '-') // Replace multiple - with single -
       .replace(/^-+/, '') // Trim - from start of text
       .replace(/-+$/, '') // Trim - from end of text
+
+    if (user === null || user === undefined) return
 
     setIsChannelCreating(true)
 

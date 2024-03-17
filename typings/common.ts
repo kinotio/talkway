@@ -10,7 +10,7 @@ type TUser = {
 type TChannel = {
   id: number
   slug: string
-  created_by: Date
+  created_by: string
   inserted_at: Date
 }
 
