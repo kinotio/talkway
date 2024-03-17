@@ -24,7 +24,8 @@
       "@lib/*": ["./lib/*"],
       "@hooks/*": ["./hooks/*"],
       "@actions/*": ["./actions/*"],
-      "@typings/*": ["./typings/*"]
+      "@typings/*": ["./typings/*"],
+      "@utils/*": ["./utils/*"]
     },
     "typeRoots": ["types/**/*.d.ts", "node_modules/@types", "typings/**/*.ts"]
   },
