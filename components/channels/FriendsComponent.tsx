@@ -14,6 +14,8 @@ import { getUsers, listenUser } from '@/actions/user'
 
 import { supabase } from '@/lib/supabase'
 
+import { getInitials } from '@/utils/common'
+
 const FriendsComponent = () => {
   const { receiverId } = useParams()
 
@@ -27,17 +29,6 @@ const FriendsComponent = () => {
   const [deletedUser, handleDeletedUser] = useState<{ old: any }>({
     old: null
   })
-
-  const getInitials = ({ user }: { user: TUser }) => {
-    return user ? (
-      user.fullname
-        .match(/(\b\S)?/g)
-        ?.join('')
-        .toUpperCase()
-    ) : (
-      <FontAwesomeIcon icon={faUser} style={{ fontSize: 14 }} />
-    )
-  }
 
   const handleGetUsers = () => {
     setIsUsersLoading(true)
