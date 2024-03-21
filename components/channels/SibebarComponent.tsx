@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faPlusCircle,
-  faUser,
   faHashtag,
   faRightFromBracket,
   faTrash
@@ -21,6 +20,8 @@ import { logout, getUser } from '@/actions/user'
 import { getChannels, createChannel, deleteChannel, listenChannel } from '@/actions/channel'
 
 import { supabase } from '@/lib/supabase'
+
+import { getInitials } from '@/utils/common'
 
 const SibebarComponent = () => {
   const { id } = useParams()
@@ -203,10 +204,14 @@ const SibebarComponent = () => {
       </div>
 
       <div className='channel_logout'>
-        <div className='channel_logout_username'>
+        <div className='channel_logout_username mt-2'>
           <div className='pb-2 text-sm font-extralight text-white flex items-center break-words'>
-            <FontAwesomeIcon className='mr-2' icon={faUser} style={{ fontSize: 12 }} />
-            <span className='break-word'>{isUserLoading ? '...' : <> {user?.fullname}</>}</span>
+            <span className='bg-white text-emerald-600  w-10 h-10 rounded-full flex justify-center items-center mr-3'>
+              {getInitials({ user })}
+            </span>
+            <div className='flex flex-col'>
+              <span className='break-words'>{user?.fullname}</span>
+            </div>
           </div>
         </div>
 
