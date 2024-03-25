@@ -4,7 +4,13 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle, faHashtag, faTrash, faGear } from '@fortawesome/free-solid-svg-icons'
+import {
+  faPlusCircle,
+  faHashtag,
+  faTrash,
+  faGear,
+  faRightFromBracket
+} from '@fortawesome/free-solid-svg-icons'
 import { getCookie, deleteCookie } from 'cookies-next'
 import { toast } from 'react-toastify'
 import { useParams } from 'next/navigation'
@@ -209,7 +215,7 @@ const SibebarComponent = () => {
         )}
       </div>
 
-      <div className='channel_logout'>
+      <div className='channel_logout bg-emerald-500'>
         <div className='channel_logout_username mt-2'>
           <div className='pb-2 text-sm font-extralight text-white flex items-center break-words'>
             <span className='bg-white text-emerald-600  w-10 h-10 rounded-full flex justify-center items-center mr-3'>
@@ -222,46 +228,34 @@ const SibebarComponent = () => {
           </div>
         </div>
 
-        <Button isIconOnly variant='light' className='text-white' onPress={onOpen}>
-          <FontAwesomeIcon icon={faGear} style={{ fontSize: 18 }} />
-        </Button>
+        <div>
+          <Button isIconOnly variant='light' className='text-white' onPress={onOpen}>
+            <FontAwesomeIcon icon={faGear} style={{ fontSize: 18 }} />
+          </Button>
 
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className='flex flex-col gap-1'>Modal Title</ModalHeader>
-                <ModalBody>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus
-                    non risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed
-                    porttitor quam.
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus
-                    non risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed
-                    porttitor quam.
-                  </p>
-                  <p>
-                    Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                    dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. Velit
-                    duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. Et mollit
-                    incididunt nisi consectetur esse laborum eiusmod pariatur proident Lorem eiusmod
-                    et. Culpa deserunt nostrud ad veniam.
-                  </p>
-                </ModalBody>
-                <ModalFooter>
-                  <Button color='danger' variant='light' onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button color='primary' onPress={onClose}>
-                    Action
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
+          <Button isIconOnly variant='light' className='text-white' onPress={handleLogout}>
+            <FontAwesomeIcon icon={faRightFromBracket} style={{ fontSize: 18 }} />
+          </Button>
+
+          <Modal backdrop='blur' size='2xl' isOpen={isOpen} onOpenChange={onOpenChange}>
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className='flex flex-col gap-1'>Settings</ModalHeader>
+                  <ModalBody></ModalBody>
+                  <ModalFooter>
+                    <Button color='danger' variant='light' onPress={onClose}>
+                      Close
+                    </Button>
+                    <Button color='success' className='text-white' onPress={onClose}>
+                      Save
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
+        </div>
       </div>
     </div>
   )
