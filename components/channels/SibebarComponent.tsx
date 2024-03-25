@@ -4,15 +4,19 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faPlusCircle,
-  faHashtag,
-  faRightFromBracket,
-  faTrash
-} from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faHashtag, faTrash, faGear } from '@fortawesome/free-solid-svg-icons'
 import { getCookie, deleteCookie } from 'cookies-next'
 import { toast } from 'react-toastify'
 import { useParams } from 'next/navigation'
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure
+} from '@nextui-org/react'
 
 import LoaderComponent from '@/components/LoaderComponent'
 
@@ -43,6 +47,8 @@ const SibebarComponent = () => {
   const [deletedChannel, handleDeletedChannel] = useState<{ old: any }>({
     old: null
   })
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const handleCreateChannel = () => {
     if (channelName === '') return
@@ -211,17 +217,51 @@ const SibebarComponent = () => {
             </span>
             <div className='flex flex-col'>
               <span className='break-words'>{user?.fullname}</span>
+              <span className='break-words'>{user?.username}</span>
             </div>
           </div>
         </div>
 
-        <button
-          onClick={handleLogout}
-          className='channel_create_input_button w-full px-6 py-2.5 text-sm font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-emerald-600 rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50'
-        >
-          <FontAwesomeIcon className='mr-2' icon={faRightFromBracket} style={{ fontSize: 14 }} />
-          {isLogoutLoading ? 'Loading...' : 'Logout'}
-        </button>
+        <Button isIconOnly variant='light' className='text-white' onPress={onOpen}>
+          <FontAwesomeIcon icon={faGear} style={{ fontSize: 18 }} />
+        </Button>
+
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className='flex flex-col gap-1'>Modal Title</ModalHeader>
+                <ModalBody>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus
+                    non risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed
+                    porttitor quam.
+                  </p>
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pulvinar risus
+                    non risus hendrerit venenatis. Pellentesque sit amet hendrerit risus, sed
+                    porttitor quam.
+                  </p>
+                  <p>
+                    Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
+                    dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. Velit
+                    duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. Et mollit
+                    incididunt nisi consectetur esse laborum eiusmod pariatur proident Lorem eiusmod
+                    et. Culpa deserunt nostrud ad veniam.
+                  </p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color='danger' variant='light' onPress={onClose}>
+                    Close
+                  </Button>
+                  <Button color='primary' onPress={onClose}>
+                    Action
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
       </div>
     </div>
   )

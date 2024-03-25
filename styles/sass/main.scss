@@ -82,11 +82,10 @@ main {
   height: 10vh;
   border-bottom-left-radius: 10px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: #34d399;
-  padding: 0 15px;
+  padding: 0 30px;
 }
 
 .channel_logout_username {
