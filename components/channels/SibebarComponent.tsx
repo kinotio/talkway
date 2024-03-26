@@ -54,6 +54,9 @@ const SibebarComponent = () => {
     old: null
   })
 
+  const [username, setUsername] = useState<string>('')
+  const [fullname, setFullname] = useState<string>('')
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const handleCreateChannel = () => {
@@ -237,18 +240,122 @@ const SibebarComponent = () => {
             <FontAwesomeIcon icon={faRightFromBracket} style={{ fontSize: 18 }} />
           </Button>
 
-          <Modal backdrop='blur' size='2xl' isOpen={isOpen} onOpenChange={onOpenChange}>
+          <Modal
+            backdrop='blur'
+            size='2xl'
+            hideCloseButton
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+          >
             <ModalContent>
               {(onClose) => (
                 <>
                   <ModalHeader className='flex flex-col gap-1'>Settings</ModalHeader>
-                  <ModalBody></ModalBody>
+                  <ModalBody>
+                    <div>
+                      <div>
+                        <span className='text-bold'>Basic</span>
+                        <div className='mt-4'>
+                          <label htmlFor='fullname' className='block text-sm text-gray-800'>
+                            Fullname
+                          </label>
+                          <input
+                            onChange={(e) => setFullname(e.target.value)}
+                            value={fullname}
+                            type='text'
+                            name='fullname'
+                            className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
+                          />
+                        </div>
+                        <div className='mt-4'>
+                          <label htmlFor='username' className='block text-sm text-gray-800'>
+                            Username
+                          </label>
+                          <input
+                            onChange={(e) => setUsername(e.target.value)}
+                            value={username}
+                            type='text'
+                            name='username'
+                            className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
+                          />
+                        </div>
+
+                        <Button className='mt-4' color='primary'>
+                          Update
+                        </Button>
+                      </div>
+
+                      <hr className='mt-8 mb-4' />
+
+                      <div>
+                        <span className='text-bold'>Email (update your email)</span>
+                        <div className='mt-4'>
+                          <label htmlFor='username' className='block text-sm text-gray-800'>
+                            Email
+                          </label>
+                          <input
+                            onChange={(e) => setUsername(e.target.value)}
+                            value={username}
+                            type='text'
+                            name='username'
+                            className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
+                          />
+                        </div>
+
+                        <Button className='mt-4' color='primary'>
+                          Update
+                        </Button>
+                      </div>
+
+                      <hr className='mt-8 mb-4' />
+
+                      <div>
+                        <span className='text-bold'>Security</span>
+                        <div className='mt-4'>
+                          <label htmlFor='username' className='block text-sm text-gray-800'>
+                            Password
+                          </label>
+                          <input
+                            onChange={(e) => setUsername(e.target.value)}
+                            value={username}
+                            type='text'
+                            name='username'
+                            className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
+                          />
+                        </div>
+                        <div className='mt-4'>
+                          <label htmlFor='username' className='block text-sm text-gray-800'>
+                            Confirm Password
+                          </label>
+                          <input
+                            onChange={(e) => setUsername(e.target.value)}
+                            value={username}
+                            type='text'
+                            name='username'
+                            className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
+                          />
+                        </div>
+
+                        <Button className='mt-4' color='primary'>
+                          Update
+                        </Button>
+                      </div>
+
+                      <hr className='mt-8 mb-4' />
+
+                      <div>
+                        <span className='text-bold'>Danger</span>
+                        <div className='mt-4'>
+                          <Button color='danger' className='text-white'>
+                            Close account
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </ModalBody>
                   <ModalFooter>
                     <Button color='danger' variant='light' onPress={onClose}>
                       Close
-                    </Button>
-                    <Button color='success' className='text-white' onPress={onClose}>
-                      Save
                     </Button>
                   </ModalFooter>
                 </>
