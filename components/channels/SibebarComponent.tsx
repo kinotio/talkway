@@ -242,10 +242,11 @@ const SibebarComponent = () => {
 
           <Modal
             backdrop='blur'
-            size='2xl'
+            size='xl'
             hideCloseButton
             isOpen={isOpen}
             onOpenChange={onOpenChange}
+            scrollBehavior='inside'
           >
             <ModalContent>
               {(onClose) => (
@@ -254,7 +255,7 @@ const SibebarComponent = () => {
                   <ModalBody>
                     <div>
                       <div>
-                        <span className='text-bold'>Basic</span>
+                        <span className='font-bold'>Basic</span>
                         <div className='mt-4'>
                           <label htmlFor='fullname' className='block text-sm text-gray-800'>
                             Fullname
@@ -288,7 +289,7 @@ const SibebarComponent = () => {
                       <hr className='mt-8 mb-4' />
 
                       <div>
-                        <span className='text-bold'>Email (update your email)</span>
+                        <span className='font-bold'>Email (update your email)</span>
                         <div className='mt-4'>
                           <label htmlFor='username' className='block text-sm text-gray-800'>
                             Email
@@ -303,14 +304,14 @@ const SibebarComponent = () => {
                         </div>
 
                         <Button className='mt-4' color='primary'>
-                          Update
+                          Verify
                         </Button>
                       </div>
 
                       <hr className='mt-8 mb-4' />
 
                       <div>
-                        <span className='text-bold'>Security</span>
+                        <span className='font-bold'>Security</span>
                         <div className='mt-4'>
                           <label htmlFor='username' className='block text-sm text-gray-800'>
                             Password
@@ -344,7 +345,7 @@ const SibebarComponent = () => {
                       <hr className='mt-8 mb-4' />
 
                       <div>
-                        <span className='text-bold'>Danger</span>
+                        <span className='font-bold'>Danger</span>
                         <div className='mt-4'>
                           <Button color='danger' className='text-white'>
                             Close account
