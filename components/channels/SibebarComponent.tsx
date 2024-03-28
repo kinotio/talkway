@@ -56,6 +56,7 @@ const SibebarComponent = () => {
 
   const [username, setUsername] = useState<string>('')
   const [fullname, setFullname] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
@@ -265,6 +266,7 @@ const SibebarComponent = () => {
                             value={fullname}
                             type='text'
                             name='fullname'
+                            placeholder={user?.fullname}
                             className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
                           />
                         </div>
@@ -277,6 +279,7 @@ const SibebarComponent = () => {
                             value={username}
                             type='text'
                             name='username'
+                            placeholder={user?.username}
                             className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
                           />
                         </div>
@@ -295,10 +298,11 @@ const SibebarComponent = () => {
                             Email
                           </label>
                           <input
-                            onChange={(e) => setUsername(e.target.value)}
-                            value={username}
+                            onChange={(e) => setEmail(e.target.value)}
+                            value={email}
                             type='text'
-                            name='username'
+                            name='email'
+                            placeholder={user?.email}
                             className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg focus:border-emerald-400 focus:ring-emerald-300 focus:outline-none focus:ring focus:ring-opacity-40'
                           />
                         </div>
