@@ -26,7 +26,7 @@ import {
 
 import LoaderComponent from '@/components/LoaderComponent'
 
-import { logout, getUser } from '@/actions/user'
+import { logout, getUser, updateUser } from '@/actions/user'
 import { getChannels, createChannel, deleteChannel, listenChannel } from '@/actions/channel'
 
 import { supabase } from '@/lib/supabase'
@@ -138,6 +138,35 @@ const SibebarComponent = () => {
         return
       }
       router.push(`/channels/${channelId - 1}`)
+    })
+  }
+
+  const handleUpdateBasicSettings = () => {
+    if (user === null || user === undefined) return
+    if (username === '' && fullname === '') return
+    const data = {
+      ...user,
+      username: username === '' ? user.username : username,
+      fullname: fullname === '' ? user.fullname : fullname
+    }
+    updateUser({ user: data }).then(({ error, data }) => {
+      if (error) {
+        toast.error('An error occurred while updating your settings')
+        return
+      }
+
+      console.log(data)
+
+      getUser({ userId })
+        .then(({ error, data }) => {
+          if (error) {
+            toast.error('An error occurred while getting user')
+            handleLogout()
+            return
+          }
+          console.log(data[0])
+        })
+        .finally(() => setIsUserLoading(false))
     })
   }
 
@@ -284,7 +313,11 @@ const SibebarComponent = () => {
                           />
                         </div>
 
-                        <Button className='mt-4' color='primary'>
+                        <Button
+                          className='mt-4'
+                          color='primary'
+                          onClick={handleUpdateBasicSettings}
+                        >
                           Update
                         </Button>
                       </div>
