@@ -60,3 +60,12 @@ export const listenUser = ({
     )
     .subscribe() as any
 }
+
+export const updateUser = ({ user }: { user: TUser }) => {
+  return supabase.auth.updateUser({
+    data: {
+      username: user.username,
+      fullname: user.fullname
+    }
+  })
+}
