@@ -31,7 +31,7 @@ import { getChannels, createChannel, deleteChannel, listenChannel } from '@/acti
 
 import { supabase } from '@/lib/supabase'
 
-import { getInitials } from '@/utils/common'
+import { getInitials, getSlugifiedChannelName } from '@/utils/common'
 
 const SibebarComponent = () => {
   const { id } = useParams()
@@ -63,14 +63,7 @@ const SibebarComponent = () => {
   const handleCreateChannel = () => {
     if (channelName === '') return
 
-    const slugifiedChannelName = channelName
-      .toString()
-      .toLowerCase()
-      .replace(/\s+/g, '-') // Replace spaces with -
-      .replace(/[^\w-]+/g, '') // Remove all non-word chars
-      .replace(/--+/g, '-') // Replace multiple - with single -
-      .replace(/^-+/, '') // Trim - from start of text
-      .replace(/-+$/, '') // Trim - from end of text
+    const slugifiedChannelName = getSlugifiedChannelName({ channelName })
 
     if (user === null || user === undefined) return
 
